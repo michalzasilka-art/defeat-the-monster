@@ -1,0 +1,76 @@
+/* XP screen, second redesign (loaded after xp-redesign.css). The player cards become tall hero cards: the moving hero
+   video fills the top of the card (hero-video.js puts it in .xp-portrait), the name sits on a plate in the hero's colour,
+   then "16 XP" with the player's own bar (--xpp from xp-show.js, full for the top scorer).
+   Cards wait dimmed, the counting card lifts and glows, collected cards light up with a check.
+   The header gets a "MISSION COMPLETE" tag on its top edge and a shorter frame so the cards have room. */
+
+/* header */
+.xpb-header{aspect-ratio:1780/300;margin:14px auto 30px}
+.xpb-header>.xpb-plaque{top:13%;height:38%}
+.xpb-header>.xpb-label{top:53.5%}
+.xpb-header>.xpb-bar{top:63%;height:25%}
+.xpb-header>.xpb-count{top:62%;height:27%}
+.xpb-header>.xpb-badge{top:48%}
+.xpb-label span::before,.xpb-label span::after{content:"";display:inline-block;vertical-align:middle;width:6cqw;height:.14cqw;margin:0 1cqw;
+  background:linear-gradient(90deg,transparent,#a8caff)}
+.xpb-label span::after{background:linear-gradient(90deg,#a8caff,transparent)}
+.xpb-screen>.xpb-header>.xpb-tag{position:absolute;z-index:4;top:0;left:50%;transform:translate(-50%,-55%);
+  padding:.55cqw 2cqw;border-radius:.8cqw;white-space:nowrap;
+  background:linear-gradient(#ffb357,#e2722a);border:.18cqw solid #ffd9a6;box-shadow:0 0 0 .2cqw #7c3d12,0 .5cqw 1.4cqw #040b2288;
+  font:900 1.35cqw/1 Impact,"Arial Black",sans-serif;letter-spacing:.25cqw;color:#2a1405;text-shadow:0 1px 0 #ffd9a6;transition:opacity .3s}
+.xps-final .xpb-screen .xpb-tag{opacity:0} /* the total-damage circle takes the middle */
+
+/* cards */
+.xpb-screen .player-grid{gap:22px;align-items:stretch}
+.xpb-screen .xp-player,.xpb-screen .xp-player:not(.xp-claimed){
+  display:flex;flex-direction:column;align-items:stretch;gap:0;padding:10px 10px 16px;border-radius:20px;
+  border:3px solid #385783;background:linear-gradient(#13213df2,#0b1629f5);
+  box-shadow:inset 0 0 0 1px #ffffff10,0 8px 25px #040b2255;
+  transition:transform .3s cubic-bezier(.2,1.4,.4,1),border-color .3s,box-shadow .3s,filter .3s}
+.xpb-screen .xp-player::before,.xpb-screen .xp-player::after{width:40px;height:40px;z-index:3;opacity:.45;transition:opacity .3s;
+  background:linear-gradient(135deg,#fff,var(--hero) 45%,color-mix(in srgb,var(--hero) 40%,#000))}
+/* video window */
+.xpb-screen .xp-player .xp-portrait{order:-1;position:relative;width:100%;height:auto;aspect-ratio:5/4;border-radius:13px;
+  border:0;box-shadow:inset 0 0 0 2px #ffffff14;background:#0b172b;overflow:hidden;align-items:flex-end}
+.xpb-screen .xp-player .xp-portrait>video.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%;transform:none!important}
+.xpb-screen .xp-player .xp-portrait .hero-art{transform:none}
+.xpb-screen .xp-player .xp-portrait::after{content:"";position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(transparent 55%,#0b1629 100%)}
+/* name plate overlapping the video */
+.xpb-screen .xp-player .xp-name{order:0;position:relative;z-index:2;align-self:center;margin-top:-17px;padding:7px 18px;border-radius:9px;
+  border:2px solid color-mix(in srgb,var(--hero) 55%,#fff);background:linear-gradient(var(--hero),color-mix(in srgb,var(--hero) 62%,#0b1226));
+  font:900 17px/1 Impact,"Arial Black",sans-serif;letter-spacing:1.2px;color:#0b1226;text-shadow:0 1px 0 #ffffff55;
+  box-shadow:0 4px 12px #040b2299}
+/* XP number + own bar */
+.xpb-screen .xp-player .xp-amount{order:1;align-self:center;margin:12px 0 10px;font:900 38px/1 Impact,"Arial Black",sans-serif;color:#fff;
+  text-shadow:1px 2px 0 #080f25,0 0 14px color-mix(in srgb,var(--hero) 60%,transparent)}
+.xpb-screen .xp-player{--xpp:0}
+.xpb-screen .xp-player .xp-amount::after{content:"";display:block;width:min(150px,80%);height:7px;margin:10px auto 0;border-radius:9px;
+  background:linear-gradient(90deg,var(--hero) calc(var(--xpp) * 100%),#ffffff1c 0);box-shadow:0 0 10px color-mix(in srgb,var(--hero) 45%,transparent)}
+.xpb-screen .xp-player .xp-amount{width:100%}
+/* waiting: dimmed */
+.xpb-screen .xp-player:not(.xps-active):not(.xps-done) .xp-portrait{filter:saturate(.25) brightness(.55)}
+.xpb-screen .xp-player:not(.xps-active):not(.xps-done) .xp-amount{color:#7f8db0}
+/* counting: lifts and glows in the hero colour */
+.xpb-screen .xp-player.xps-active{transform:translateY(-8px) scale(1.03)!important;border-color:var(--hero)!important;
+  box-shadow:0 0 0 2px color-mix(in srgb,var(--hero) 40%,transparent),0 0 34px color-mix(in srgb,var(--hero) 65%,transparent),0 14px 30px #040b22aa!important}
+.xpb-screen .xp-player.xps-active::before,.xpb-screen .xp-player.xps-active::after,
+.xpb-screen .xp-player.xps-done::before,.xpb-screen .xp-player.xps-done::after{opacity:1}
+/* collected */
+.xpb-screen .xp-player.xps-done{border-color:color-mix(in srgb,var(--hero) 75%,#385783)!important;
+  box-shadow:inset 0 0 26px color-mix(in srgb,var(--hero) 18%,transparent),0 0 18px color-mix(in srgb,var(--hero) 30%,transparent)!important}
+.xpb-screen .xp-player.xps-done .xp-name::after{content:"✓";position:absolute;top:50%;right:-15px;transform:translateY(-50%);
+  display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#0b1226;border:2px solid var(--hero);
+  font:900 13px/1 system-ui,sans-serif;color:var(--hero);animation:xpc-pop .35s cubic-bezier(.2,1.6,.4,1)}
+.xpb-screen .xp-player.xps-done .xp-portrait{animation:xpc-flash .6s ease-out}
+@keyframes xpc-pop{from{transform:translateY(-50%) scale(0)}}
+@keyframes xpc-flash{0%{filter:brightness(1.8) saturate(1.4)}100%{filter:none}}
+@media (max-width:850px){
+  .xpb-screen .xp-player .xp-portrait{aspect-ratio:16/10}
+  .xpb-screen .xp-player .xp-name{font-size:14px;padding:5px 12px;margin-top:-14px}
+  .xpb-screen .xp-player .xp-amount{font-size:28px;margin:8px 0 4px}
+}
+@media (prefers-reduced-motion:reduce){
+  .xpb-screen .xp-player.xps-active{transform:none!important}
+  .xpb-screen .xp-player.xps-done .xp-portrait,.xpb-screen .xp-player.xps-done .xp-name::after{animation:none}
+}

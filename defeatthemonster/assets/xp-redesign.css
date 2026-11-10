@@ -1,0 +1,52 @@
+/* XP screen in the menu's style (loaded after xp-bar.css / xp-show.css): the header is one framed panel with corner
+   brackets over the ruined city instead of the purple stone frame picture; the XP badge is a round dial like the
+   answer-time stopwatch; the bar and the counter get the orange frame; the player cards look like the menu's hero cards.
+   Positions inside the header stay as they were, so the count-up, the liquid and the lightning circle still line up. */
+.xpb-header .xpb-frame{display:none}
+.xpb-header{border-radius:22px;
+  background:linear-gradient(#13213de6,#0c1830ee),url(../art/battle-city.png) 50% 50%/cover;
+  border:3px solid #ee8a35;box-shadow:inset 0 0 0 2px #7c3d12,inset 0 0 36px #ee8a352b,0 10px 30px #040b2266}
+.xpb-header::before,.xpb-header::after{content:"";position:absolute;width:60px;height:60px;pointer-events:none;z-index:3;
+  background:linear-gradient(135deg,#ffd9a6,#e27a2a 50%,#6e310c);
+  clip-path:polygon(0 0,100% 0,100% 22%,30% 22%,22% 30%,22% 100%,0 100%)}
+.xpb-header::before{top:-3px;left:-3px}
+.xpb-header::after{right:-3px;bottom:-3px;transform:rotate(180deg)}
+/* title as a tag on the top edge, total damage under it */
+.xpb-title{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:#e4ddff;filter:none;
+  font:800 2.2cqw/1 Impact,"Arial Black",sans-serif;letter-spacing:.15cqw;text-shadow:1px 2px 0 #080f25}
+.xpb-total strong{font:900 4.6cqw/1 Impact,"Arial Black",sans-serif;color:#ffd9a6;text-shadow:1px 2px 0 #080f25,0 0 1.2cqw #ff9d3c66}
+.xpb-total img{filter:sepia(1) saturate(4) hue-rotate(-20deg) brightness(1.1)}
+.xpb-label span{font:800 1.25cqw/1 Impact,"Arial Black",sans-serif;letter-spacing:.2cqw;color:#a8caff}
+/* XP badge: round dial */
+.xpb-badge{content:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23ffb357'/%3E%3Cstop offset='1' stop-color='%23e2722a'/%3E%3C/linearGradient%3E%3C/defs%3E%3Ccircle cx='50' cy='50' r='46' fill='%230a162b'/%3E%3Ccircle cx='50' cy='50' r='42' fill='none' stroke='url(%23g)' stroke-width='7'/%3E%3Ctext x='50' y='61' text-anchor='middle' font-family='Impact,Arial Black,sans-serif' font-size='32' fill='%23ffd9a6'%3EXP%3C/text%3E%3C/svg%3E");
+  filter:drop-shadow(0 0 1cqw #ff9d3c80)}
+/* bar and counter: orange frame */
+.xpb-bar{background:linear-gradient(#070b1b,#0d1430 60%,#0a0f24);
+  box-shadow:inset 0 0 0 .22cqw #0a0d20,inset 0 .5cqw 1.2cqw #000a,0 0 0 .25cqw #ee8a35,0 0 1.3cqw #ff9d3c55}
+.xpb-count{background:linear-gradient(#141c3c,#0b1128);box-shadow:inset 0 0 0 .25cqw #7c3d12,0 0 0 .25cqw #ee8a35,0 0 1.3cqw #ff9d3c55}
+.xpb-count strong{background:none;-webkit-background-clip:border-box;background-clip:border-box;color:#ffd9a6;font:900 2.6cqw/1 Impact,"Arial Black",sans-serif}
+.xpb-count span{font:800 1.6cqw/1 Impact,"Arial Black",sans-serif;color:#a8caff}
+.xpb-screen.overloading .xpb-bar{animation:xpr-full .7s ease-in-out infinite alternate}
+@keyframes xpr-full{to{box-shadow:inset 0 0 0 .22cqw #0a0d20,0 0 0 .25cqw #ffd9a6,0 0 3cqw #ff9d3c}}
+/* player cards like the hero cards on the menu */
+.xpb-screen .xp-player,.xpb-screen .xp-player:not(.xp-claimed){position:relative;border-radius:20px;
+  background:linear-gradient(#13213ddb,#0c1830e8),url(../art/battle-city.png) 50% 50%/cover;
+  border:3px solid #ee8a35;box-shadow:inset 0 0 0 2px #7c3d12,inset 0 0 28px #ee8a352b,0 8px 25px #040b2255}
+.xpb-screen .xp-player::before,.xpb-screen .xp-player::after{content:"";position:absolute;width:44px;height:44px;border:0;pointer-events:none;
+  background:linear-gradient(135deg,#ffd9a6,#e27a2a 50%,#6e310c);
+  clip-path:polygon(0 0,100% 0,100% 22%,30% 22%,22% 30%,22% 100%,0 100%)}
+.xpb-screen .xp-player::before{top:-3px;left:-3px}
+.xpb-screen .xp-player::after{right:-3px;bottom:-3px;transform:rotate(180deg)}
+.xpb-screen .xp-name{align-self:center;padding:5px 12px;border-radius:8px;background:linear-gradient(#1d3151,#101c30);border:2px solid #385783;
+  font:800 17px/1 Impact,"Arial Black",sans-serif;letter-spacing:1px;color:#e4ddff;text-shadow:1px 2px 0 #080f25}
+.xpb-screen .xp-portrait{border:4px solid var(--hero);box-shadow:0 0 18px color-mix(in srgb,var(--hero) 55%,transparent)}
+.xpb-screen .xp-amount{font:900 32px/1 Impact,"Arial Black",sans-serif;color:#ffd9a6;text-shadow:1px 2px 0 #080f25,0 0 12px #ff9d3c55}
+.xpb-screen .xp-player.xps-active{border-color:var(--hero)!important;transform:translateY(-4px);
+  box-shadow:inset 0 0 0 2px #7c3d12,0 0 28px color-mix(in srgb,var(--hero) 70%,transparent)!important}
+.xpb-screen .xp-player.xps-done{border-color:#ee8a35!important}
+/* the lightning circle: orange-hot instead of purple */
+.xps-orb>circle:first-child{stroke:#ee8a35;filter:drop-shadow(0 0 16px #ff9d3c) drop-shadow(0 0 32px #e2722aaa)}
+.xps-arc{stroke:#ffd9a6;filter:drop-shadow(0 0 5px #ff9d3c) drop-shadow(0 0 10px #e2722a)}
+.xps-k{fill:#ffd9a6}
+.xps-n{filter:drop-shadow(0 0 10px #ff9d3c)}
+.xps-orb>circle:nth-child(2){stroke:#ffd9a6}

@@ -1,0 +1,145 @@
+/* Battle player cards in the same armored style as the setup cards. */
+:is(.screen-battle,.screen-countdown) .battle-players .player{
+  position:relative;
+  background:linear-gradient(#13213ddb,#0c1830e8),url(../art/battle-city.png) 50%/cover;
+  border:3px solid #719bdc;
+  border-radius:20px;
+  padding:12px 14px 14px;
+  opacity:.9;
+  box-shadow:inset 0 0 0 2px #2c4c7e,inset 0 0 28px #5a8bd42b,0 8px 25px #040b2255;
+}
+:is(.screen-battle,.screen-countdown) .battle-players .player.active{
+  opacity:1;
+  border-color:#b999ff;
+  box-shadow:inset 0 0 0 2px #4a5d98,inset 0 0 30px #9370ff33,0 0 26px #9370ff70;
+}
+:is(.screen-battle,.screen-countdown) .battle-players .player.eliminated{opacity:.55;filter:grayscale(.7)}
+
+/* metal corner brackets, like the setup cards */
+:is(.screen-battle,.screen-countdown) .battle-players .player:before,
+:is(.screen-battle,.screen-countdown) .battle-players .player:after{
+  content:"";pointer-events:none;position:absolute;inset:auto;border:0;
+  width:46px;height:46px;
+  clip-path:polygon(0 0,100% 0,100% 22%,30% 22%,22% 30%,22% 100%,0 100%);
+  background:linear-gradient(135deg,#a4c9ff,#41659a 50%,#1c355c);
+  filter:drop-shadow(2px 3px 2px #0008);
+}
+:is(.screen-battle,.screen-countdown) .battle-players .player:before{top:-3px;left:-3px}
+:is(.screen-battle,.screen-countdown) .battle-players .player:after{bottom:-3px;right:-3px;transform:rotate(180deg)}
+:is(.screen-battle,.screen-countdown) .battle-players .player.active:before,
+:is(.screen-battle,.screen-countdown) .battle-players .player.active:after{background:linear-gradient(135deg,#e3d2ff,#8a63e0 50%,#3b2575)}
+
+/* header: rank badge · name plate · damage */
+:is(.screen-battle,.screen-countdown) .battle-players .card-top{
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:8px;
+  min-height:40px;padding:0 6px;
+}
+:is(.screen-battle,.screen-countdown) .battle-players .card-top .rank-badge{grid-column:1;grid-row:1;width:30px;height:30px;font-size:13px}
+:is(.screen-battle,.screen-countdown) .battle-players .card-top .hero-name{
+  grid-column:2;grid-row:1;justify-self:center;max-width:100%;overflow:hidden;text-overflow:ellipsis;
+  clip-path:polygon(8% 0,94% 0,100% 18%,100% 78%,92% 100%,6% 100%,0 80%,0 20%);
+  background:linear-gradient(#1d3151,#101c30);border:2px solid #385783;
+  padding:6px 12px;white-space:nowrap;color:#e4ddff;text-shadow:1px 2px #080f25;
+  font:400 clamp(13px,1.05vw,18px)/1.1 Impact,"Arial Black",sans-serif;letter-spacing:.5px;
+}
+:is(.screen-battle,.screen-countdown) .battle-players .player.active .card-top .hero-name{border-color:#8a6fe0;color:#fff}
+:is(.screen-battle,.screen-countdown) .battle-players .card-top .damage-pill{
+  grid-column:3;grid-row:1;border:2px solid #759ad7;background:#0b192dc9;color:#ff9ab7;
+  font-weight:800;box-shadow:inset 0 0 0 2px #2a466f;
+}
+
+/* portrait: always a circle */
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar{justify-content:center;gap:10px;margin:8px 0 12px}
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar>span{
+  flex:0 0 auto;
+  width:clamp(88px,8vw,126px);height:auto;min-height:0;aspect-ratio:1/1;
+  border:3px solid var(--hero);border-radius:50%;
+  background:linear-gradient(#152b5155,#0d203a70),url(../art/battle-city.png) 50%/cover;
+  box-shadow:0 0 0 4px #31567580,0 0 19px var(--hero),inset 0 0 25px #0008;
+  display:flex;align-items:flex-end;justify-content:center;overflow:hidden;margin:0 auto;
+}
+@supports (color:color-mix(in lab,red,red)){
+  :is(.screen-battle,.screen-countdown) .battle-players .battle-avatar>span{
+    box-shadow:0 0 0 4px #31567580,0 0 19px color-mix(in srgb,var(--hero) 35%,transparent),inset 0 0 25px #0008;
+  }
+}
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar>span .hero-art{
+  width:100%;height:100%;max-height:none;object-fit:contain;object-position:center bottom;
+  transform-origin:bottom;transform:scale(1.08);
+}
+
+/* hearts in the pink pixel style of the setup screen */
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar .hearts{
+  color:#f589cb;font-size:20px;letter-spacing:6px;line-height:1;text-align:center;
+  text-shadow:0 0 6px #e766ab88;
+}
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar .hearts .lost{color:#34476a;text-shadow:none}
+
+@media (max-width:850px){
+  :is(.screen-battle,.screen-countdown) .battle-players .battle-avatar>span{width:84px}
+  :is(.screen-battle,.screen-countdown) .battle-players .card-top .hero-name{font-size:14px;padding:5px 10px}
+  :is(.screen-battle,.screen-countdown) .battle-players .player:before,
+  :is(.screen-battle,.screen-countdown) .battle-players .player:after{width:34px;height:34px}
+}
+
+/* Answer-time slider on the setup screen */
+.screen-setup .setup-controls>div:first-child{flex:1;min-width:0}
+.time-slider{
+  display:flex;align-items:center;gap:clamp(12px,1.6vw,22px);
+  background:linear-gradient(#141f3cf2,#0c1730f2);
+  border:2px solid #5b6fa6;border-radius:22px;
+  padding:34px clamp(14px,1.8vw,26px) 18px;
+  box-shadow:inset 0 0 0 1px #ffffff12,0 10px 30px #040b2255;
+}
+.time-slider .ts-edge{color:#e2e8ff;font:600 clamp(13px,1.25vw,19px)/1 system-ui,-apple-system,"Segoe UI",sans-serif;white-space:nowrap}
+.time-slider .ts-track{position:relative;flex:1;min-width:0;height:36px;display:flex;align-items:center}
+.time-slider input[type=range]{
+  -webkit-appearance:none;appearance:none;width:100%;height:14px;margin:0;cursor:pointer;outline:none;
+  border:1px solid #43557f;border-radius:999px;
+  background:linear-gradient(90deg,#8f4dff,#a66bff) 0 0/var(--p) 100% no-repeat,#26345a;
+}
+.time-slider input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:34px;height:34px;border-radius:50%;
+  background:#8b4dff;border:4px solid #fff;box-shadow:0 0 16px #9b5cffcc;
+}
+.time-slider input[type=range]::-moz-range-thumb{
+  width:26px;height:26px;border-radius:50%;background:#8b4dff;border:4px solid #fff;box-shadow:0 0 16px #9b5cffcc;
+}
+.time-slider input[type=range]::-moz-range-track{background:transparent;border:0}
+.time-slider input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 4px #b58dff66,0 0 16px #9b5cffcc}
+.time-slider .ts-bubble{
+  position:absolute;bottom:calc(100% + 8px);left:calc(17px + (100% - 34px) * var(--pn));transform:translateX(-50%);
+  background:#2a2968;border:2px solid #6b5fd0;border-radius:10px;padding:3px 12px;
+  color:#fff;font:700 clamp(15px,1.4vw,22px)/1.2 system-ui,-apple-system,"Segoe UI",sans-serif;
+  pointer-events:none;white-space:nowrap;
+}
+.time-slider .ts-bubble:after{
+  content:"";position:absolute;left:50%;top:100%;transform:translateX(-50%);
+  border:7px solid transparent;border-top-color:#6b5fd0;
+}
+@media (max-width:540px){
+  .time-slider{padding:30px 12px 14px;gap:8px}
+  .time-slider .ts-edge{font-size:12px}
+}
+
+/* Attacks: hero energy bolt → Rob, and Rob's eye-laser beams → player */
+.bolt-muzzle{fill:var(--shot);transform-box:fill-box;transform-origin:center;filter:drop-shadow(0 0 12px var(--shot));animation:atk-muzzle .22s ease-out both}
+.bolt-glow{stroke:var(--shot);stroke-width:22px;stroke-linecap:round;opacity:.7;filter:blur(3px);stroke-dasharray:.3 3;animation:atk-bolt .28s cubic-bezier(.3,0,.8,1) both}
+.bolt-core{stroke:#fff;stroke-width:6px;stroke-linecap:round;stroke-dasharray:.22 3;filter:drop-shadow(0 0 6px var(--shot)) drop-shadow(0 0 2px #fff);animation:atk-bolt .28s cubic-bezier(.3,0,.8,1) both}
+.shot-impact .impact-ring{fill:none;stroke:var(--shot);stroke-width:5px;transform-box:fill-box;transform-origin:center;animation:atk-ring .58s ease-out both}
+.shot-impact .impact-flash{fill:#fff;transform-box:fill-box;transform-origin:center;filter:drop-shadow(0 0 14px var(--shot));animation:atk-flash .58s ease-out both}
+.impact-spark{stroke:#fff;stroke-width:4px;stroke-linecap:round;stroke-dasharray:14 60;filter:drop-shadow(0 0 4px var(--shot));animation:atk-spark .58s ease-out both}
+.beam-eye{fill:#fff;transform-box:fill-box;transform-origin:center;filter:drop-shadow(0 0 6px var(--laser)) drop-shadow(0 0 10px #fff8);animation:atk-eye .5s ease-out both}
+.beam-glow{stroke:var(--laser);stroke-width:18px;stroke-linecap:round;opacity:.65;filter:blur(3px) drop-shadow(0 0 6px #ffffff66);stroke-dasharray:1 2;animation:atk-beam .5s ease-out both}
+.beam-core{stroke:#fff;stroke-width:4px;stroke-linecap:round;stroke-dasharray:1 2;filter:drop-shadow(0 0 5px var(--laser));animation:atk-beam .5s ease-out both}
+.beam-impact .impact-ring{fill:none;stroke:var(--laser);stroke-width:6px;transform-box:fill-box;transform-origin:center;filter:drop-shadow(0 0 6px #fff8);animation:atk-ring-late .55s ease-out both}
+.beam-impact .impact-flash{fill:#fff;transform-box:fill-box;transform-origin:center;filter:drop-shadow(0 0 12px var(--laser));animation:atk-flash-late .55s ease-out both}
+@keyframes atk-muzzle{0%{opacity:.95;transform:scale(.3)}100%{opacity:0;transform:scale(1.5)}}
+@keyframes atk-bolt{0%{stroke-dashoffset:.25;opacity:1}90%{opacity:1}100%{stroke-dashoffset:-1;opacity:0}}
+@keyframes atk-ring{0%,45%{opacity:0;transform:scale(.2)}50%{opacity:1}100%{opacity:0;transform:scale(1.7)}}
+@keyframes atk-flash{0%,45%{opacity:0;transform:scale(.3)}52%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.4)}}
+@keyframes atk-spark{0%,45%{opacity:0;stroke-dashoffset:0}50%{opacity:1}100%{opacity:0;stroke-dashoffset:-40}}
+@keyframes atk-eye{0%{opacity:0;transform:scale(.2)}20%{opacity:1;transform:scale(1.6)}100%{opacity:0;transform:scale(1)}}
+@keyframes atk-beam{0%,12%{stroke-dashoffset:1;opacity:1}40%{stroke-dashoffset:0;opacity:1}75%{opacity:.9}100%{stroke-dashoffset:0;opacity:0}}
+@keyframes atk-ring-late{0%,30%{opacity:0;transform:scale(.2)}38%{opacity:1}100%{opacity:0;transform:scale(1.6)}}
+@keyframes atk-flash-late{0%,30%{opacity:0;transform:scale(.3)}40%{opacity:1;transform:scale(1)}100%{opacity:0;transform:scale(1.3)}}

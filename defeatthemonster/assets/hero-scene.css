@@ -1,0 +1,49 @@
+/* Final screen: the "Our Heroes" picture (art/our-heroes.webp, 1024x572) with each player's place in a medal circle above
+   their hero and their name + XP at their feet, like the round badges in Gummy the Fisherman. Markup from the game bundle:
+   .hero-scene > .hs-pin.hs-h<hero>.hs-r<place> > .hs-badge + .hs-tag. Positions are % of the picture. */
+.final-heroes.hero-scene-screen{max-width:none;width:100%;padding:clamp(10px,2.4vh,26px) 12px}
+.hero-scene{position:relative;container-type:inline-size;width:min(96vw,calc((100vh - 140px) * 1024 / 572));aspect-ratio:1024/572;margin:0 auto 18px;
+  border:3px solid #ee8a35;border-radius:20px;overflow:hidden;background:#0a1222;
+  box-shadow:inset 0 0 0 2px #7c3d12,0 12px 34px #040b22aa}
+.hs-art{display:block;width:100%;height:100%;object-fit:cover}
+
+/* where each hero stands in the picture: x = centre, y = badge centre (above the head) */
+.hs-pin{position:absolute;left:var(--x);top:0;bottom:0;width:0}
+.hs-h2{--x:32.2%;--y:20.5%} /* Pix */
+.hs-h0{--x:45.4%;--y:24.5%} /* Stela */
+.hs-h3{--x:58.1%;--y:30.5%} /* Charlie */
+.hs-h1{--x:69.8%;--y:24.5%} /* Foxino */
+
+.hs-badge{--m1:#2a3c62;--m2:#13213d;--mt:#e4ddff;--s:7.2cqw;
+  position:absolute;left:0;top:var(--y);width:var(--s);height:var(--s);transform:translate(-50%,-50%) scale(0);
+  display:flex;align-items:baseline;justify-content:center;padding-top:calc(var(--s) * .2);box-sizing:border-box;border-radius:50%;
+  background:radial-gradient(circle at 50% 30%,#1d3151,#0a162b 70%);
+  border:calc(var(--s) * .085) solid var(--m1);
+  box-shadow:0 0 0 calc(var(--s) * .03) #0a1020,0 0 calc(var(--s) * .3) color-mix(in srgb,var(--m1) 70%,transparent),0 calc(var(--s) * .08) calc(var(--s) * .18) #000a;
+  font:400 calc(var(--s) * .5)/1 Impact,"Arial Black",sans-serif;color:var(--mt);text-shadow:0 2px 0 #050a16;
+  animation:hs-pop .5s cubic-bezier(.3,1.7,.5,1) var(--d,.5s) forwards}
+.hs-badge small{font-size:.42em;margin-left:.04em;letter-spacing:.5px}
+/* little pointer down to the hero */
+.hs-badge::after{content:"";position:absolute;left:50%;top:100%;transform:translateX(-50%);
+  border:calc(var(--s) * .13) solid transparent;border-top:calc(var(--s) * .16) solid var(--m1);margin-top:calc(var(--s) * .02)}
+.hs-r0 .hs-badge{--m1:#ffd36b;--mt:#ffe08a;--s:8.6cqw;animation:hs-pop .55s cubic-bezier(.3,1.7,.5,1) var(--d) forwards,hs-glow 1.8s ease-in-out calc(var(--d) + .6s) infinite}
+.hs-r1 .hs-badge{--m1:#cfd8e6;--mt:#eef3fb}
+.hs-r2 .hs-badge{--m1:#d08a4e;--mt:#ffc796}
+.hs-r3 .hs-badge{--m1:var(--hero);--mt:#d7e3ff}
+.hs-crown{position:absolute;left:50%;bottom:86%;transform:translateX(-50%) rotate(-8deg);font:400 calc(var(--s) * .55)/1 serif;color:#ffd36b;
+  text-shadow:0 0 calc(var(--s) * .2) #ffc44d,0 2px 0 #7a4a00}
+
+/* name + XP on a plate at the bottom, under the hero */
+.hs-tag{position:absolute;left:0;bottom:3.5%;transform:translate(-50%,12px);opacity:0;display:flex;flex-direction:column;align-items:center;gap:.25em;
+  padding:.45em .9em .5em;min-width:9cqw;white-space:nowrap;border-radius:.7em;
+  background:linear-gradient(#16294bf0,#0a162bf0);border:2px solid var(--hero);box-shadow:0 0 14px color-mix(in srgb,var(--hero) 45%,transparent),0 6px 14px #000a;
+  font-size:clamp(11px,1.45cqw,22px);animation:hs-up .45s ease-out calc(var(--d) + .15s) forwards}
+.hs-tag strong{font:800 1em/1 system-ui,-apple-system,"Segoe UI",sans-serif;color:#fff}
+.hs-tag em{font:400 1.15em/1 Impact,"Arial Black",sans-serif;font-style:normal;letter-spacing:.5px;color:var(--hero)}
+.hs-r0 .hs-tag{border-color:#ffd36b;box-shadow:0 0 18px #ffd36b88,0 6px 14px #000a}
+
+@keyframes hs-pop{to{transform:translate(-50%,-50%) scale(1)}}
+@keyframes hs-up{to{opacity:1;transform:translate(-50%,0)}}
+@keyframes hs-glow{50%{box-shadow:0 0 0 calc(var(--s) * .03) #0a1020,0 0 calc(var(--s) * .55) #ffd36bcc,0 calc(var(--s) * .08) calc(var(--s) * .18) #000a}}
+@media (prefers-reduced-motion:reduce){.hs-badge,.hs-tag{animation-duration:.01s;animation-delay:0s;animation-iteration-count:1}}
+@media (max-width:700px){.hero-scene{width:100%}.hs-tag{min-width:0;padding:.35em .5em}}

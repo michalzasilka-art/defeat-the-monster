@@ -1,0 +1,9 @@
+/* Rob, round 1 (assets/rob-video.js): the transparent video sits where the picture was; the picture keeps its place, hidden */
+img.arena-robot.rob-has-video{visibility:hidden}
+video.arena-robot.rob-video{object-fit:contain;object-position:center;background:transparent;pointer-events:none}
+:is(.screen-battle,.screen-countdown) video.arena-robot.rob-video{z-index:1}
+/* Rob stands on the rubble pile; the offset is measured from the background by rob-video.js (layout) */
+:is(.screen-battle,.screen-countdown) :is(video.arena-robot.rob-video,img.arena-robot.rob-has-video){translate:0 var(--rob-dy,0px)}
+/* round leaderboard: the moving robot replaces the picture next to the title */
+img.leaderboard-rob.rob-has-video{display:none}
+video.leaderboard-rob.rob-board{pointer-events:none;filter:drop-shadow(0 10px 14px #040b2299)}

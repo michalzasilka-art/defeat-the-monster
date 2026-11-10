@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+<defs>
+<linearGradient id="st" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6c7aad"/><stop offset="1" stop-color="#232b52"/></linearGradient>
+<linearGradient id="core" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d27dff"/><stop offset=".5" stop-color="#8a34f0"/><stop offset="1" stop-color="#4a15a8"/></linearGradient>
+<linearGradient id="txt" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#e3c9ff"/></linearGradient>
+<filter id="g" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="7" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+</defs>
+<polygon points="100,4 186,52 186,148 100,196 14,148 14,52" fill="url(#st)" stroke="#080c1f" stroke-width="5" stroke-linejoin="round"/>
+<g stroke="#080c1f" stroke-width="3" fill="none" opacity=".8"><path d="M100 4L96 40M186 52L150 70M186 148L150 130M100 196L104 160M14 148L50 128M14 52L52 72"/></g>
+<g fill="#a4b3e2" opacity=".35"><polygon points="100,8 180,54 150,68 100,40"/><polygon points="20,54 100,8 96,40 52,70"/></g>
+<polygon points="100,34 158,67 158,133 100,166 42,133 42,67" fill="#1a0f3c" stroke="#c98bff" stroke-width="6" filter="url(#g)"/>
+<polygon points="100,44 150,72 150,128 100,156 50,128 50,72" fill="url(#core)"/>
+<polygon points="100,44 150,72 100,90 50,72" fill="#f0d0ff" opacity=".25"/>
+<text x="100" y="116" text-anchor="middle" font-family="Oswald,Impact,Arial Narrow,sans-serif" font-weight="700" font-size="54" font-style="italic" fill="url(#txt)" stroke="#3a0d80" stroke-width="2" paint-order="stroke">XP</text>
+<g fill="#c98bff" filter="url(#g)"><polygon points="176,20 184,32 176,44 168,32"/><polygon points="20,168 26,176 20,186 14,176"/><polygon points="30,24 35,30 30,37 25,30"/></g>
+</svg>

@@ -1,0 +1,8 @@
+/* "Rob won this round" screen: no dark cloud behind the content, title art is a transparent
+   cut-out (art/defeat-title.webp, markup from scripts/game-patches/12-defeat-title). */
+.cinematic.defeat-story{background:none}
+.defeat-story img.defeat-art{width:min(690px,100%);height:auto;margin:0 auto 18px;display:block;background:none;user-select:none}
+
+/* "Rob won" cutscene videos (all heroes lost): full screen like the other cutscenes. Without this, the
+   .defeat-story width (950px) and transparent background above win over .fullscreen-video. */
+.cinematic.fullscreen-video.defeat-story{max-width:none;width:100vw;padding:0;background:#000}

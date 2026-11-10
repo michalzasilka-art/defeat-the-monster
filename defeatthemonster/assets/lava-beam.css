@@ -1,0 +1,27 @@
+/* Wrong answer: Rob's eye lasers as molten lava in Rob's own colour (assets/lava-beam.js adds the
+   bubbling filter and the drips). Round 1 red Rob = red-orange lava, round 2 purple Rob = purple lava,
+   round 3 black Rob = black lava with glowing cracks; TEST2's white robot = red lava with a white-hot core. */
+.beam-attack.lava-l1{--lava-crust:#4a0700;--lava-mid:#ff4d12;--lava-hot:#ffd84a;--lava-glow:#ff5a1a}
+.beam-attack.lava-l2{--lava-crust:#24064a;--lava-mid:#b03cff;--lava-hot:#ffc2ff;--lava-glow:#c45cff}
+/* TEST2 white robot (round 1): red lava with a white-hot core */
+:root[data-dtm-mode=test2] .beam-attack.lava-l1{--lava-crust:#5a0000;--lava-mid:#ff2626;--lava-hot:#ffffff;--lava-glow:#ff3030}
+.beam-attack.lava-l3{--lava-crust:#000;--lava-mid:#1a1a20;--lava-hot:#ff5a24;--lava-glow:#ff2e14}
+/* outer stream: thick, bubbling, dark crust around it */
+.beam-attack[class*=lava-] .beam-glow{
+  stroke:var(--lava-mid);stroke-width:24px;opacity:1;
+  filter:url(#lava-flow) drop-shadow(0 0 2px var(--lava-crust)) drop-shadow(0 0 3px var(--lava-crust)) drop-shadow(0 0 14px var(--lava-glow));
+}
+/* molten core */
+.beam-attack[class*=lava-] .beam-core{
+  stroke:var(--lava-hot);stroke-width:8px;
+  filter:url(#lava-core) drop-shadow(0 0 6px var(--lava-hot));
+}
+.beam-attack.lava-l3 .beam-core{stroke-width:5px} /* black lava: only thin glowing cracks */
+.beam-attack[class*=lava-] .beam-eye{fill:var(--lava-hot);filter:drop-shadow(0 0 6px var(--lava-glow)) drop-shadow(0 0 12px var(--lava-glow))}
+.beam-attack[class*=lava-] .impact-ring{stroke:var(--lava-mid);filter:drop-shadow(0 0 3px var(--lava-crust)) drop-shadow(0 0 10px var(--lava-glow))}
+.beam-attack[class*=lava-] .impact-flash{fill:var(--lava-hot);filter:drop-shadow(0 0 14px var(--lava-glow))}
+/* drips falling off the stream */
+.lava-drip{fill:var(--lava-hot);stroke:var(--lava-mid);stroke-width:2px;transform-box:fill-box;transform-origin:center;
+  filter:drop-shadow(0 0 4px var(--lava-glow));opacity:0;animation:lava-drip .7s cubic-bezier(.45,0,.9,.6) both}
+.lava-l3 .lava-drip{fill:var(--lava-mid);stroke:var(--lava-hot)}
+@keyframes lava-drip{0%{opacity:0;transform:translateY(0) scale(.4)}20%{opacity:1;transform:translateY(2px) scale(1)}100%{opacity:0;transform:translateY(46px) scale(.5,1.4)}}

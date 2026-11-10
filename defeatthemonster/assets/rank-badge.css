@@ -1,0 +1,46 @@
+/* Leaderboard rank badges: a hexagon gem in the row's colour (--rank-color) with a dark centre and a big number.
+   The bundle writes "♛ 1." as text, so the text is hidden and the number comes from the row's place-N class;
+   1st place gets a gold crown (the <span>) sitting on the top point and a slow shine. */
+.armored-ranking .board-row .board-rank{
+  position:relative;display:block;width:54px;height:60px;padding:0;margin:0 auto;border:0;border-radius:0;clip-path:none;
+  background:none;box-shadow:none;font-size:0;color:transparent;text-shadow:none;
+  filter:drop-shadow(0 3px 0 #050b1c) drop-shadow(0 0 9px color-mix(in srgb,var(--rank-color) 45%,transparent))}
+.armored-ranking .board-row .board-rank::before,.armored-ranking .board-row .board-rank::after{
+  content:"";position:absolute;clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%)}
+/* metal rim */
+.armored-ranking .board-row .board-rank::before{inset:0;
+  background:linear-gradient(160deg,color-mix(in srgb,var(--rank-color) 45%,#fff) 0%,var(--rank-color) 38%,color-mix(in srgb,var(--rank-color) 45%,#120a24) 100%)}
+/* dark centre + number */
+.armored-ranking .board-row .board-rank::after{inset:4px;display:grid;place-items:center;padding-top:1px;
+  background:radial-gradient(circle at 50% 28%,color-mix(in srgb,var(--rank-color) 38%,#0a162b),#0a162b 72%);
+  font:900 30px/1 Impact,"Arial Black",sans-serif;color:#fff;
+  text-shadow:0 2px 0 color-mix(in srgb,var(--rank-color) 40%,#050b1c),0 0 10px var(--rank-color)}
+.armored-ranking .board-row.place-0 .board-rank::after{content:"1"}
+.armored-ranking .board-row.place-1 .board-rank::after{content:"2"}
+.armored-ranking .board-row.place-2 .board-rank::after{content:"3"}
+.armored-ranking .board-row.place-3 .board-rank::after{content:"4"}
+/* crown only for 1st */
+.armored-ranking .board-row .board-rank span{display:none}
+.armored-ranking .board-row.place-0 .board-rank span{
+  display:block;position:absolute;z-index:2;top:-11px;left:50%;width:30px;height:21px;transform:translateX(-50%) rotate(-8deg);
+  background:url(./rank-crown.svg) 50% 50%/contain no-repeat;font-size:0;text-shadow:none;
+  filter:drop-shadow(0 0 6px #ffcf52aa);animation:rb-crown 2.6s ease-in-out infinite}
+/* 1st: a light sweep across the gem */
+.armored-ranking .board-row.place-0 .board-rank::before{
+  background:linear-gradient(115deg,transparent 35%,#fff9 48%,transparent 60%) -150% 0/250% 100% no-repeat,
+    linear-gradient(160deg,color-mix(in srgb,var(--rank-color) 45%,#fff) 0%,var(--rank-color) 38%,color-mix(in srgb,var(--rank-color) 45%,#120a24) 100%);
+  animation:rb-shine 3.2s ease-in-out infinite}
+@keyframes rb-shine{0%,55%{background-position:-150% 0,0 0}100%{background-position:250% 0,0 0}}
+@keyframes rb-crown{0%,100%{transform:translateX(-50%) translateY(0) rotate(-8deg)}50%{transform:translateX(-50%) translateY(-2px) rotate(-4deg)}}
+@media (prefers-reduced-motion:reduce){
+  .armored-ranking .board-row.place-0 .board-rank::before,.armored-ranking .board-row.place-0 .board-rank span{animation:none}}
+@media (max-width:1100px){
+  .armored-ranking .board-row .board-rank{width:46px;height:52px}
+  .armored-ranking .board-row .board-rank::after{font-size:25px}}
+@media (max-width:850px){
+  .armored-ranking .board-row .board-rank{width:40px;height:45px}
+  .armored-ranking .board-row .board-rank::after{inset:3px;font-size:21px}
+  .armored-ranking .board-row.place-0 .board-rank span{top:-12px;width:24px;height:17px}}
+/* tab leaderboard (board-rows.css): the badge sits on the top edge of each tab, centred */
+.armored-ranking .board-row .board-rank{position:absolute;top:-26px;left:50%;transform:translateX(-50%);margin:0}
+.armored-ranking .board-row.place-0 .board-rank{top:-30px}

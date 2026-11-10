@@ -1,0 +1,30 @@
+/* XP screen show (xp-show.js): no Collect XP buttons, XP counts up P1 → P4, then lightning into a total-damage circle */
+.xpb-screen .xp-player .collect{display:none!important}
+.xpb-screen .xp-player{transition:box-shadow .25s,border-color .25s,transform .25s}
+.xpb-screen .xp-player.xps-active{border-color:var(--hero,#b46bff)!important;transform:translateY(-4px);
+  box-shadow:inset 0 0 0 2px #26325f,0 0 26px color-mix(in srgb,var(--hero,#b46bff) 70%,transparent)!important}
+.xpb-screen .xp-player.xps-done{border-color:var(--hero,#8b64e6)!important}
+.xpb-screen .xp-player.xps-tick .xp-amount{animation:xpsTick .12s ease-out}
+@keyframes xpsTick{0%{transform:scale(1.14);color:#fff}100%{transform:none}}
+.xpb-screen .xp-amount{display:inline-block;margin-bottom:6px}
+.xpb-screen .xp-player.xps-fired .xp-portrait{animation:xpsZap .5s ease-out}
+@keyframes xpsZap{0%{filter:brightness(2.2)}100%{filter:none}}
+
+/* the game's own "TEAM XP MAXED!" text gives way to the circle */
+.xpb-screen .xpb-burst{display:none!important} /* no "TEAM XP MAXED!" */
+.xps-final .xpb-screen .xpb-plaque{opacity:0;transition:opacity .3s}
+
+.xps-layer{position:fixed;left:0;top:0;z-index:50;pointer-events:none;overflow:visible}
+.xps-orb{opacity:0;transform:scale(.3)}
+.xps-orb.on{animation:xpsOrb .55s cubic-bezier(.2,1.5,.4,1) forwards}
+@keyframes xpsOrb{to{opacity:1;transform:none}}
+.xps-orb>circle:first-child{filter:drop-shadow(0 0 16px #a05cff) drop-shadow(0 0 32px #6d2bd9aa)}
+.xps-arc{fill:none;stroke:#e2c2ff;stroke-width:3.5;stroke-linejoin:round;stroke-linecap:round;filter:drop-shadow(0 0 5px #b46bff) drop-shadow(0 0 10px #8a3df0)}
+.xps-k{fill:#cdb6ff;font:700 13px/1 Oswald,"Exo 2",sans-serif;letter-spacing:2px;text-anchor:middle}
+.xps-n{fill:#fff;font-family:Oswald,"Exo 2",sans-serif;font-weight:700;text-anchor:middle;filter:drop-shadow(0 0 10px #b46bff)}
+@media (prefers-reduced-motion:reduce){.xps-orb.on{animation:none;opacity:1;transform:none}}
+
+/* final podium: no small lines above/below the title, and "OUR HEROES!" centred
+   (.podium-screen h1 {margin:18px 0} was overriding the title's auto side margins) */
+.final-heroes>.eyebrow,.final-heroes>p{display:none}
+.final-heroes .heroes-title{margin:18px auto 26px}

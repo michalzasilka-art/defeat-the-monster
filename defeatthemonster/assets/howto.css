@@ -1,0 +1,57 @@
+/* "How to play" screen (assets/howto.js): annotated screenshots in the orange-framed navy style of the menu */
+.briefing.howto2{max-width:none;width:min(1500px,96vw);margin:0 auto;padding:clamp(10px,2vh,24px) 0;text-align:left}
+.h2-root{display:flex;flex-direction:column;gap:clamp(10px,1.6vh,18px)}
+.h2-head{display:flex;align-items:center;gap:clamp(12px,2vw,28px)}
+.h2-head h1{margin:0;font:400 clamp(30px,3.6vw,54px)/1 Impact,"Arial Black",sans-serif;letter-spacing:1.5px;color:#fff3e6;
+  text-shadow:0 3px 0 #b54d14,0 6px 0 #4a1d08,0 0 24px #ee8a3566;white-space:nowrap}
+.h2-dots{display:flex;gap:8px;flex-wrap:wrap}
+.h2-dots button{display:grid;place-items:center;width:clamp(30px,2.6vw,40px);aspect-ratio:1;padding:0;cursor:pointer;
+  font:800 clamp(14px,1.2vw,18px)/1 Impact,"Arial Black",sans-serif;color:#a8caff;
+  background:linear-gradient(#1d3151,#101c30);border:2px solid #385783;border-radius:10px;transition:transform .15s,border-color .15s,background .15s}
+.h2-dots button:hover{transform:translateY(-2px);border-color:#7fb4ff}
+.h2-dots button.seen{color:#ffd9b8;border-color:#7c3d12}
+.h2-dots button.on{color:#1a0d02;background:linear-gradient(#ffb15c,#ee8a35);border-color:#ffd23f;box-shadow:0 0 14px #ee8a35aa}
+.h2-skip{margin-left:auto;padding:8px 14px;cursor:pointer;font:700 14px/1 system-ui,-apple-system,"Segoe UI",sans-serif;color:#b7cdf4;
+  background:#0c1830cc;border:2px solid #385783;border-radius:10px}
+.h2-skip:hover{color:#fff;border-color:#7fb4ff}
+
+.h2-body{display:grid;grid-template-columns:minmax(0,1fr) clamp(250px,24vw,360px);gap:clamp(12px,1.6vw,22px);align-items:stretch}
+.h2-stage{min-width:0}
+.h2-shot{position:relative;margin:0;container-type:inline-size;aspect-ratio:1600/913;width:min(100%,calc((100vh - 170px) * 1600 / 913));margin-inline:auto;
+  border:3px solid #ee8a35;border-radius:18px;overflow:hidden;background:#0a1222;
+  box-shadow:inset 0 0 0 2px #7c3d12,0 10px 30px #040b2299;animation:h2-in .35s ease both}
+.h2-shot img{display:block;width:100%;height:100%;object-fit:cover;filter:saturate(.9) brightness(.82)}
+.h2-marks{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
+.h2-ring{fill:#ffd23f14;stroke:#ffd23f;stroke-width:6;stroke-dasharray:1;stroke-dashoffset:1;filter:drop-shadow(0 0 8px #ffd23f) drop-shadow(0 0 2px #000);
+  animation:h2-draw .55s ease-out var(--d) forwards}
+.h2-arrow{fill:none;stroke:#ffd23f;stroke-width:5;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;filter:drop-shadow(0 2px 3px #000c);
+  animation:h2-draw .45s ease-out var(--d) forwards}
+.h2-note{position:absolute;transform:translate(-50%,-50%) scale(.7);opacity:0;display:flex;align-items:center;gap:.5em;padding:.45em .8em .45em .45em;
+  white-space:nowrap;font:800 clamp(11px,1.5cqw,24px)/1.1 system-ui,-apple-system,"Segoe UI",sans-serif;color:#fff;
+  background:linear-gradient(#16294bf2,#0a162bf2);border:2px solid #ffd23f;border-radius:.8em;box-shadow:0 0 14px #ffd23f66,0 6px 14px #000a;
+  animation:h2-pop .3s cubic-bezier(.3,1.6,.5,1) var(--d) forwards}
+.h2-note b{display:grid;place-items:center;width:1.5em;height:1.5em;border-radius:50%;background:#ffd23f;color:#1a1200;font-size:.85em}
+
+.h2-side{display:flex;flex-direction:column;gap:12px;padding:22px 20px 18px;position:relative;
+  background:linear-gradient(#13213ddb,#0c1830f0),url(../art/battle-city.png) 50% 50%/cover;
+  border:3px solid #ee8a35;border-radius:20px;box-shadow:inset 0 0 0 2px #7c3d12,inset 0 0 28px #ee8a352b,0 8px 25px #040b2255}
+.h2-tag{align-self:flex-start;padding:5px 10px;background:linear-gradient(#1d3151,#101c30);border:2px solid #385783;
+  font:800 14px/1 Impact,"Arial Black",sans-serif;letter-spacing:1px;color:#e4ddff}
+.h2-tag b{color:#ffb15c;font-weight:inherit}
+.h2-title{margin:4px 0 0;font:400 clamp(26px,2.4vw,38px)/1.05 Impact,"Arial Black",sans-serif;letter-spacing:1px;color:#fff3e6;text-shadow:1px 3px 0 #080f25}
+.h2-text{margin:0;font:600 clamp(16px,1.3vw,20px)/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;color:#d7e3ff}
+.h2-nav{margin-top:auto;display:flex;gap:10px}
+.h2-nav button{flex:1;padding:14px 12px;cursor:pointer;font:800 16px/1 system-ui,-apple-system,"Segoe UI",sans-serif;border-radius:12px}
+.h2-prev{color:#b7cdf4;background:#0c1830;border:2px solid #385783}
+.h2-prev:disabled{opacity:.35;cursor:default}
+.h2-next{flex:1.6 !important}
+
+@keyframes h2-draw{to{stroke-dashoffset:0}}
+@keyframes h2-pop{to{opacity:1;transform:translate(-50%,-50%) scale(1)}}
+@keyframes h2-in{from{opacity:0;transform:translateY(8px)}}
+@media (prefers-reduced-motion:reduce){.h2-ring,.h2-arrow,.h2-note,.h2-shot{animation-duration:.01s;animation-delay:0s}}
+@media (max-width:900px){
+  .h2-body{grid-template-columns:1fr}
+  .h2-head{flex-wrap:wrap}
+  .h2-shot{width:100%}
+}

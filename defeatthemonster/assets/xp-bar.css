@@ -1,0 +1,64 @@
+/* Collect XP screen: total damage plaque, team XP liquid bar, player cards.
+   Markup comes from scripts/game-patches/08-xp-bar; liquid is drawn by xp-bar.js. */
+.xp.xp-rewards.xpb-screen{max-width:1300px;width:100%;padding:18px 28px 28px;font-family:"Oswald","Exo 2",sans-serif}
+
+.xpb-header{position:relative;width:100%;aspect-ratio:1780/330;container-type:inline-size;margin:0 auto 26px}
+.xpb-frame{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;user-select:none}
+
+.xpb-plaque{position:absolute;left:33%;width:34%;top:3.5%;height:40%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.2cqw}
+.xpb-title{margin:0!important;font-family:inherit;font-weight:700;font-size:3.35cqw;line-height:1;letter-spacing:.12cqw;
+  background:linear-gradient(#ffffff 0%,#dfe4f2 45%,#9ea8c4 100%);-webkit-background-clip:text;background-clip:text;color:transparent;
+  filter:drop-shadow(0 .2cqw 0 #1a1f3a) drop-shadow(0 0 .6cqw #0006)}
+.xpb-total{display:flex;align-items:center;gap:1cqw}
+.xpb-total img{width:3cqw;height:3cqw}
+.xpb-total strong{font-weight:700;font-size:3.8cqw;line-height:1;color:#f4f1ff;text-shadow:0 .2cqw 0 #1a1f3a,0 0 1cqw #a46bff80}
+
+.xpb-label{position:absolute;left:0;right:0;top:49.6%;text-align:center;line-height:1}
+.xpb-label span{font-weight:600;font-size:1.3cqw;letter-spacing:.18cqw;color:#b9c7ff}
+
+.xpb-badge{position:absolute;left:2.3%;top:47%;width:10.4%;aspect-ratio:1;filter:drop-shadow(0 0 1.2cqw #a855ff90);z-index:2;pointer-events:none}
+
+.xpb-bar{position:absolute;left:12.6%;width:68.4%;top:62%;height:24%;border-radius:1.4cqw 0 0 1.4cqw;
+  background:linear-gradient(#070b1b,#0d1430 60%,#0a0f24);
+  box-shadow:inset 0 0 0 .22cqw #0a0d20,inset 0 .5cqw 1.2cqw #000a,0 0 0 .25cqw #6c55c9,0 0 1.3cqw #9a5cff80}
+.xpb-liquid{position:absolute;inset:.3cqw;width:calc(100% - .6cqw);height:calc(100% - .6cqw);border-radius:1.2cqw 0 0 1.2cqw}
+.xpb-notches{position:absolute;inset:0;display:flex;pointer-events:none;z-index:0}
+.xpb-liquid{z-index:1}
+.xpb-notches i{flex:1;border-right:.18cqw solid #1f2748;box-shadow:.12cqw 0 0 #00000080}
+.xpb-notches i:last-child{border-right:0;box-shadow:none}
+.xpb-slot{position:absolute;top:50%;width:1px;height:1px;pointer-events:none}
+
+.xpb-count{position:absolute;left:81%;width:16.4%;top:61%;height:26%;display:flex;align-items:center;justify-content:center;gap:.5cqw;
+  border-radius:0 3cqw 3cqw 0;background:linear-gradient(#141c3c,#0b1128);
+  box-shadow:inset 0 0 0 .25cqw #3d4c8a,0 0 0 .25cqw #6c55c9,0 0 1.3cqw #9a5cff70;white-space:nowrap}
+.xpb-count strong{font-weight:700;font-size:2.4cqw;line-height:1;background:linear-gradient(#e8dcff,#9fb4ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.xpb-count span{font-weight:700;font-size:1.75cqw;line-height:1;color:#eef0ff}
+
+/* player cards */
+.xpb-screen .player-grid{gap:26px}
+.xpb-screen .xp-player{border-radius:4px;border:3px solid #8b64e6;background:linear-gradient(#141d3a,#0e1530);padding:20px 26px 24px;gap:14px;
+  box-shadow:inset 0 0 0 2px #1d2650,0 0 18px #7b4dff33}
+.xpb-screen .xp-player:not(.xp-claimed){border-color:#9fb1ee;box-shadow:inset 0 0 0 2px #26325f,0 0 22px #8fb0ff40}
+.xpb-screen .xp-player:before{border-color:#9dbdf2;border-width:6px}
+.xpb-screen .xp-name{font-family:inherit;font-weight:600;font-size:19px;letter-spacing:2px;color:#c7b3ff}
+.xpb-screen .xp-portrait{width:142px;height:142px;border-width:3px;background:radial-gradient(#16203f,#0b1226);box-shadow:0 0 14px color-mix(in srgb,var(--hero) 45%,transparent)}
+.xpb-screen .xp-amount{font-family:inherit;font-weight:700;font-size:30px;line-height:1;color:#dcd2ff;letter-spacing:.5px}
+.xpb-screen .collect{font-family:inherit;font-weight:600;font-size:19px;letter-spacing:1px;min-height:56px;border-radius:7px;color:#fff;
+  background:linear-gradient(#a877ff,#7a45ef);border:2px solid #c9b0ff;box-shadow:0 0 18px #9a5cff90,inset 0 1px 0 #ffffff50}
+.xpb-screen .collect:disabled{opacity:1;background:#44366f;border-color:#8a72d4;color:#d8cff5;box-shadow:inset 0 0 0 1px #2c2350}
+.xpb-screen .collect:not(:disabled):hover{filter:brightness(1.1)}
+
+/* full bar */
+.xpb-screen.overloading .xpb-bar{animation:xpb-full .7s ease-in-out infinite alternate}
+@keyframes xpb-full{to{box-shadow:inset 0 0 0 .22cqw #0a0d20,0 0 0 .25cqw #c49bff,0 0 3cqw #b46bff}}
+.xpb-burst{font-family:"Oswald",sans-serif;font-weight:700;color:#e9d6ff;text-shadow:0 0 18px #a35cff;letter-spacing:2px;margin-top:22px}
+
+@media (max-width:850px){
+  .xp.xp-rewards.xpb-screen{padding:14px 12px 20px}
+  .xpb-screen .player-grid{gap:12px}
+  .xpb-screen .xp-player{padding:14px 12px}
+  .xpb-screen .xp-portrait{width:84px;height:84px}
+  .xpb-screen .xp-amount{font-size:22px}
+  .xpb-screen .collect,.xpb-screen .xp-name{font-size:14px}
+}
+@media (prefers-reduced-motion:reduce){.xpb-screen.overloading .xpb-bar{animation:none}}

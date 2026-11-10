@@ -1,0 +1,46 @@
+/* Start-up loading screen (start-loader.js): sits on top of the game's own loader until every
+   picture, icon and video is downloaded, in the style of the hero cards. */
+.sl{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(14px,2.6vh,26px);
+  padding:24px 16px;color:#e4ddff;font-family:"Exo 2","Arial Black",sans-serif;background:#0b1226;transition:opacity .5s,visibility .5s}
+.sl::before{content:"";position:absolute;inset:-20px;background:url(../art/battle-city.png) center/cover;filter:blur(6px) brightness(.45) saturate(1.1);z-index:-1}
+.sl.done{opacity:0;visibility:hidden;pointer-events:none}
+.sl-logo{width:min(560px,82vw);height:auto;filter:drop-shadow(0 10px 24px #000a);animation:slFloat 3s ease-in-out infinite}
+@keyframes slFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+
+/* card like the hero tabs: navy glass, orange frame + corner brackets, HERO-style tag */
+.sl-card{position:relative;width:min(560px,92vw);padding:30px 26px 22px;border:3px solid #ee8a35;border-radius:20px;
+  background:linear-gradient(#13213ddb,#0c1830ee);box-shadow:inset 0 0 0 2px #7c3d12,inset 0 0 28px #ee8a352b,0 14px 34px #000a}
+.sl-card::before,.sl-card::after{content:"";position:absolute;width:50px;height:50px;pointer-events:none;
+  background:linear-gradient(135deg,#ffd9a6,#e27a2a 50%,#6e310c);clip-path:polygon(0 0,100% 0,100% 22%,30% 22%,22% 30%,22% 100%,0 100%)}
+.sl-card::before{top:-3px;left:-3px}
+.sl-card::after{right:-3px;bottom:-3px;transform:rotate(180deg)}
+.sl-tag{position:absolute;left:18px;top:-15px;padding:5px 10px;background:linear-gradient(#1d3151,#101c30);border:2px solid #385783;
+  font:800 15px/1 Impact,"Arial Black",sans-serif;letter-spacing:1px;color:#e4ddff;text-shadow:1px 2px 0 #080f25}
+.sl-tag b{color:#a480ed;font-weight:inherit}
+.sl-h{margin:0 0 16px;text-align:center;font:400 clamp(24px,3.4vh,34px)/1 Impact,"Arial Black",sans-serif;letter-spacing:1.5px;color:#f4efff;text-shadow:0 3px 0 #1a1230}
+
+/* the four heroes light up one by one as the download goes on */
+.sl-heroes{display:flex;justify-content:center;gap:clamp(10px,2.4vw,22px);margin-bottom:18px}
+.sl-hero{width:clamp(54px,8vh,74px);aspect-ratio:1;border-radius:50%;border:3px solid #3a4870;background:#0b182d center/cover;
+  filter:grayscale(1) brightness(.45);transition:filter .5s,border-color .5s,box-shadow .5s,transform .5s}
+.sl-hero.on{filter:none;border-color:var(--c);box-shadow:0 0 16px var(--c);transform:translateY(-3px)}
+
+/* progress bar: dark track, purple liquid fill, orange frame */
+.sl-bar{position:relative;height:24px;border-radius:12px;background:#0a1226;border:2px solid #ee8a35;box-shadow:inset 0 2px 6px #000a,0 0 12px #ee8a3540;overflow:hidden}
+.sl-bar i{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:10px;background:linear-gradient(90deg,#5a22c8,#7a34e6 60%,#b46bff);
+  box-shadow:0 0 12px #9d4cf6;transition:width .3s ease-out}
+.sl-bar i::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,#ffffff55 50%,transparent 70%);background-size:220% 100%;animation:slShine 1.6s linear infinite}
+@keyframes slShine{from{background-position:120% 0}to{background-position:-100% 0}}
+.sl-row{display:flex;justify-content:space-between;align-items:baseline;margin-top:10px;gap:10px}
+.sl-pct{font:400 28px/1 Impact,"Arial Black",sans-serif;color:#ffb357;text-shadow:0 0 10px #ff9d3c88}
+.sl-what{padding:4px 8px;background:#111f35a6;border:2px solid #36537d;border-radius:10px;font:13px/1.2 monospace;color:#a8caff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sl-err{display:none;margin-top:14px;text-align:center}
+.sl.err .sl-err{display:block}
+.sl-err p{margin:0 0 10px;font:700 14px/1.3 "Exo 2",sans-serif;color:#ffb3c1}
+.sl-err button{padding:10px 22px;border:2px solid #ee8a35;border-radius:10px;background:linear-gradient(#3558c2,#1d318a);color:#fff;
+  font:800 15px/1 "Exo 2","Arial Black",sans-serif;cursor:pointer}
+@media (prefers-reduced-motion:reduce){.sl-logo,.sl-bar i::after{animation:none}}
+
+/* tip under the card */
+.sl-tip{margin:0;max-width:min(560px,92vw);text-align:center;font:600 clamp(13px,1.8vh,16px)/1.4 "Exo 2",Arial,sans-serif;color:#c9d6ff;text-shadow:0 2px 6px #000}
+.sl-tip b{color:#ffb357;letter-spacing:1px;font-family:Impact,"Arial Black",sans-serif;font-weight:400}

@@ -1,0 +1,53 @@
+/* Menu top row: ANSWER TIME, GAME MODE and HOW TO PLAY as three cards of one height, in the same frame style
+   (orange frame with corner brackets over the ruined city, a tag on the top edge). Loaded after battle-cards.css,
+   menu-howto.css and test2-mode.css, which it overrides. */
+.screen-setup .setup-controls{--row-h:clamp(104px,13vh,128px);align-items:stretch}
+.screen-setup .setup-controls>div:first-child,.mode-tab,.howto-tab{position:relative;display:flex}
+/* one frame for all three */
+.screen-setup .time-slider,.mode-card,.howto-card{
+  position:relative;box-sizing:border-box;width:100%;min-height:var(--row-h);
+  background:linear-gradient(#13213ddb,#0c1830e8),url(../art/battle-city.png) 50% 50%/cover;
+  border:3px solid #ee8a35;border-radius:20px;
+  box-shadow:inset 0 0 0 2px #7c3d12,inset 0 0 28px #ee8a352b,0 8px 25px #040b2255}
+.screen-setup .time-slider::before,.screen-setup .time-slider::after,.mode-card::before,.mode-card::after{
+  content:"";position:absolute;width:50px;height:50px;pointer-events:none;
+  background:linear-gradient(135deg,#ffd9a6,#e27a2a 50%,#6e310c);
+  clip-path:polygon(0 0,100% 0,100% 22%,30% 22%,22% 30%,22% 100%,0 100%)}
+.screen-setup .time-slider::before,.mode-card::before{top:-3px;left:-3px}
+.screen-setup .time-slider::after,.mode-card::after{right:-3px;bottom:-3px;transform:rotate(180deg)}
+.mode-card{padding:24px 12px 12px;align-content:center}
+.howto-card{padding:24px 18px 14px 16px}
+/* the ANSWER TIME label as a tag on the frame, like GAME MODE and NEW HERE? */
+.screen-setup .setup-controls>div:first-child>.eyebrow{position:absolute;z-index:2;left:18px;top:-14px;margin:0;padding:5px 10px;transform:none;clip-path:none;
+  background:linear-gradient(#1d3151,#101c30);border:2px solid #385783;
+  font:800 clamp(13px,1.05vw,16px)/1 Impact,"Arial Black",sans-serif;letter-spacing:1px;color:#e4ddff;text-shadow:1px 2px 0 #080f25;pointer-events:none}
+/* answer time: the value in a badge on the left, the slider on the right with its two ends underneath */
+.screen-setup .time-slider{display:grid;grid-template-columns:auto 1fr 1fr;grid-template-areas:"badge track track" "badge min max";
+  align-content:center;column-gap:clamp(12px,1.4vw,20px);row-gap:6px;padding:24px clamp(14px,1.6vw,24px) 14px}
+.screen-setup .time-slider .ts-track{display:contents} /* its slider and value badge become grid items */
+.screen-setup .time-slider input[type=range]{grid-area:track;align-self:center}
+.screen-setup .time-slider .ts-edge{font:700 12px/1 system-ui,-apple-system,"Segoe UI",sans-serif;color:#a8caff;opacity:.85}
+.screen-setup .time-slider .ts-edge:first-child{grid-area:min;justify-self:start}
+.screen-setup .time-slider .ts-edge:last-child{grid-area:max;justify-self:end}
+.screen-setup .time-slider .ts-bubble{grid-area:badge;position:static;transform:none;align-self:center;display:grid;place-items:center;
+  width:clamp(58px,5vw,72px);height:clamp(58px,5vw,72px);padding:0;
+  background:linear-gradient(#0a162b,#111e34);border:3px solid #7399d4;border-radius:7px;box-shadow:inset 0 0 0 2px #27436b,0 0 14px #9b5cff55;
+  clip-path:polygon(14% 0,86% 0,100% 20%,100% 80%,86% 100%,14% 100%,0 80%,0 20%);
+  font:900 clamp(22px,2vw,30px)/1 Impact,"Arial Black",sans-serif;color:#c9a8ff;text-shadow:1px 2px 0 #080f25}
+.screen-setup .time-slider .ts-bubble:after{display:none}
+.screen-setup .time-slider input[type=range]{height:12px;border-color:#36537d;
+  background:linear-gradient(90deg,#ee8a35,#ffb357) 0 0/var(--p) 100% no-repeat,#111f35}
+.screen-setup .time-slider input[type=range]::-webkit-slider-thumb{width:28px;height:28px;background:#ff9d3c;border:4px solid #fff;box-shadow:0 0 14px #ff9d3ccc}
+.screen-setup .time-slider input[type=range]::-moz-range-thumb{width:22px;height:22px;background:#ff9d3c;border:4px solid #fff;box-shadow:0 0 14px #ff9d3ccc}
+/* the chosen time as a plain round dial: an orange ring fills from 3.5 s to 10 s. The ring and the slider fill glide to
+   the new value (--pn/--p registered below so they can be animated), and the ring's edges are soft so it looks smooth. */
+@property --pn{syntax:"<number>";inherits:true;initial-value:0}
+@property --p{syntax:"<percentage>";inherits:true;initial-value:0%}
+.screen-setup .time-slider{transition:--pn .35s cubic-bezier(.2,.8,.3,1),--p .35s cubic-bezier(.2,.8,.3,1)}
+.screen-setup .time-slider .ts-bubble{position:relative;inset:auto;border-radius:50%;clip-path:none;border:0;
+  width:clamp(62px,5.4vw,76px);height:clamp(62px,5.4vw,76px);overflow:visible;
+  background:radial-gradient(circle,#0a162b 0 56%,#0a162b00 58.5%),
+             conic-gradient(#ffb357,#ee8a35 calc(var(--pn) * 360deg),#1c2b48 calc(var(--pn) * 360deg + 1.5deg));
+  box-shadow:0 0 0 2px #7c3d1288,0 0 16px #ff9d3c44;
+  font:900 clamp(20px,1.8vw,26px)/1 Impact,"Arial Black",sans-serif;color:#ffd9a6;text-shadow:1px 2px 0 #080f25}
+.screen-setup .time-slider .ts-bubble::before,.screen-setup .time-slider .ts-bubble::after{display:none;content:none}

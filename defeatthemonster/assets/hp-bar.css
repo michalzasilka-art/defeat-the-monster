@@ -1,0 +1,35 @@
+/* Rob's HP bar: rusty stone frame (art/hp-frame.webp) with the live "HP / max" readout in the top
+   plaque and 23 glowing cells in the channel. Cell count/colours: scripts/game-patches/13-hp-cells.
+   Positions are percentages of the frame image (1918 x 537 source px). */
+:is(.screen-battle,.screen-countdown) .boss-health{
+  width:440px;max-width:72%;aspect-ratio:1918/537;top:10px;bottom:auto;padding:0;
+  background:url(../art/hp-frame.webp) center/100% 100% no-repeat;container-type:inline-size;
+}
+:is(.screen-battle,.screen-countdown) .boss-health .hp-counter{
+  position:absolute;left:44.3%;top:15.1%;width:21.4%;height:20.9%;margin:0;padding:0;gap:1.2cqw;
+  display:flex;align-items:center;justify-content:center;clip-path:none;border:0;background:none;box-shadow:none;
+  font-family:"Black Ops One","Exo 2",Impact,sans-serif;font-weight:400;font-size:5.3cqw;letter-spacing:.2cqw;line-height:1;
+  color:#f3f1f4;text-shadow:0 .25cqw 0 #1a1414,0 0 .8cqw #000c;
+}
+:is(.screen-battle,.screen-countdown) .boss-health .hp-counter svg{display:none}
+:is(.screen-battle,.screen-countdown) .boss-health .hp-counter em,
+:is(.screen-battle,.screen-countdown) .boss-health .hp-counter .hp-max{color:#f3f1f4;font-style:normal}
+:is(.screen-battle,.screen-countdown) .boss-health .hp-track.armored-hp{
+  position:absolute;left:7.2%;top:56%;width:86.1%;height:19.2%;margin:0;padding:0;
+  display:grid;grid-template-columns:repeat(23,minmax(0,1fr));column-gap:1.02cqw;
+  clip-path:none;border:0;border-radius:0;background:none;box-shadow:none;overflow:visible;
+}
+:is(.screen-battle,.screen-countdown) .boss-health .armored-hp .hp-block{
+  height:100%;border-radius:.3cqw;overflow:hidden;background:linear-gradient(#1c1418,#0e0a0d);
+  box-shadow:inset 0 0 0 .15cqw #000,inset 0 .3cqw .6cqw #0009;
+}
+:is(.screen-battle,.screen-countdown) .boss-health .armored-hp .hp-block i{
+  border-radius:.25cqw;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 40' preserveAspectRatio='none'%3E%3Cpath d='M3 6l5 7-2 6 6 5 1 8M8 13l7-3M6 19l-4 5M12 24l5-2' fill='none' stroke='white' stroke-opacity='.45' stroke-width='.7'/%3E%3C/svg%3E") center/100% 100%,
+    radial-gradient(120% 90% at 35% 25%,#ffffff70,#fff0 60%),
+    linear-gradient(color-mix(in srgb,var(--block-color) 80%,#fff),var(--block-color) 55%,color-mix(in srgb,var(--block-color) 75%,#000));
+  box-shadow:inset 0 0 0 .15cqw color-mix(in srgb,var(--block-color) 55%,#fff),0 0 1.1cqw var(--block-color);
+  filter:none;
+}
+@media (max-width:850px){:is(.screen-battle,.screen-countdown) .boss-health{top:6px;bottom:auto}}

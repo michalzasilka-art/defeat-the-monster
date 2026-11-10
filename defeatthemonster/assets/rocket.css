@@ -1,0 +1,105 @@
+/* Rocket round (Classic round 3, assets/rocket.js): launchers on the cards, 3-part load bars, rockets, smoke, explosions */
+/* no health bar for Rob and no hearts this round: the rockets decide it */
+html.dtm-rocket section.battle .boss-health,html.dtm-rocket section.battle .shield,html.dtm-rocket section.battle .card-hearts{display:none!important}
+
+.rk-layer{position:fixed;inset:0;z-index:40;pointer-events:none;overflow:hidden}
+.rk-unit{position:absolute;display:flex;flex-direction:column;align-items:center;gap:3px;filter:drop-shadow(0 8px 10px #000b)}
+.rk-launcher{width:100%;line-height:0}
+.rk-svg{width:100%;height:auto;overflow:visible}
+.rk-unit.mirror .rk-svg{transform:scaleX(-1)}
+.rk-tube{transition:transform .3s}
+.rk-glow{opacity:.15;transition:opacity .3s}
+.rk-unit.armed .rk-glow{opacity:1;animation:rk-charge .18s ease-in-out infinite alternate}
+.rk-unit.armed .rk-launcher{animation:rk-tremble .09s linear infinite}
+.rk-unit.kick .rk-launcher{animation:rk-kick .45s cubic-bezier(.2,1.4,.4,1)}
+.rk-unit.mirror.kick .rk-launcher{animation-name:rk-kick-m}
+
+/* the 3-part load bar under each launcher */
+.rk-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;width:86%;padding:3px;border-radius:8px;
+  background:#0a1222e6;border:2px solid var(--hero,#7fb4ff);box-shadow:0 0 10px color-mix(in srgb,var(--hero,#7fb4ff) 45%,transparent)}
+.rk-bar i{height:14px;border-radius:4px;background:#1b2a47;border:1px solid #2d4370;display:grid;place-items:center;
+  font:900 11px/1 system-ui,-apple-system,sans-serif;font-style:normal;color:#fff}
+.rk-bar i.ok{background:linear-gradient(#6dfcae,#21b46a);border-color:#b9ffd8;box-shadow:0 0 8px #3dff9a99;animation:rk-seg .35s cubic-bezier(.3,1.8,.5,1)}
+.rk-bar i.ok.fast{background:linear-gradient(#fff3b0,#ffc93c);border-color:#fffbe0;color:#5a3a00;box-shadow:0 0 10px #ffd36bcc}
+.rk-bar i.no{background:linear-gradient(#ff7a85,#c4202f);border-color:#ffc0c5;box-shadow:0 0 8px #ff3b4a88;animation:rk-seg .35s cubic-bezier(.3,1.8,.5,1)}
+.rk-unit.armed .rk-bar{border-color:#ffd36b;box-shadow:0 0 16px #ffd36bcc}
+.rk-label{padding:2px 8px;border-radius:6px;background:#0a1222e6;font:800 11px/1.2 system-ui,-apple-system,sans-serif;letter-spacing:.6px;color:#d7e3ff;white-space:nowrap}
+.rk-unit.was-hit .rk-label{color:#ffd36b}
+.rk-unit.was-dud .rk-label{color:#ff9b8f}
+.rk-unit.fired .rk-glow{opacity:0}
+
+/* rocket + trajectory */
+.rk-rocket{position:absolute;left:0;top:0;width:var(--w,66px);line-height:0;will-change:transform;filter:drop-shadow(0 0 10px #ff9a38)}
+.rk-rocket.gold{filter:drop-shadow(0 0 16px #ffd36b) drop-shadow(0 0 4px #fff)}
+.rk-rocket.dud{filter:none;opacity:.9}
+.rk-rocket svg{width:100%;height:auto;overflow:visible}
+.rk-flame,.rk-flame2{transform-origin:18px 15px;animation:rk-flame .07s linear infinite alternate}
+.rk-rocket.dud .rk-flame,.rk-rocket.dud .rk-flame2{opacity:.25}
+.rk-trail{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.rk-trail path{fill:none;stroke:#ffb35c;stroke-width:3;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:.55;filter:drop-shadow(0 0 6px #ff9a38)}
+.rk-trail.gold path{stroke:#ffe38a;stroke-width:4;opacity:.75}
+.rk-trail.fade path{transition:opacity .8s;opacity:0}
+
+/* smoke + fire puffs */
+.rk-puff{position:absolute;width:var(--s);height:var(--s);margin:calc(var(--s) / -2) 0 0 calc(var(--s) / -2);border-radius:50%;
+  animation:rk-puff 1.6s ease-out forwards;will-change:transform,opacity}
+.rk-puff.smoke{background:radial-gradient(circle,#f1ece6d9 0,#cfc9c3a6 28%,#9a959166 50%,#9a959100 70%)}
+.rk-puff.smoke.warm{background:radial-gradient(circle,#fff3dfe0 0,#ffd6a8aa 28%,#c2a78f66 50%,#c2a78f00 70%)}
+.rk-puff.fire{background:radial-gradient(circle,#fff7cf 0,#ffc04a 35%,#ff6a1a 60%,#ff6a1a00 72%);animation-name:rk-fire;mix-blend-mode:screen}
+.rk-puff.fire.gold{background:radial-gradient(circle,#ffffff 0,#ffe680 35%,#ffb020 60%,#ffb02000 72%)}
+.rk-puff.flash{background:radial-gradient(circle,#fff 0,#fff3b0 30%,#ff9a38 55%,#ff9a3800 72%);animation-name:rk-fire;mix-blend-mode:screen}
+
+/* explosion */
+.rk-boom{position:absolute;width:0;height:0}
+.rk-boom i{position:absolute;left:0;top:0;border-radius:50%;transform:translate(-50%,-50%)}
+.rk-boom .f{width:calc(170px * var(--k));height:calc(170px * var(--k));background:radial-gradient(circle,#fff 0,#fff2b0 22%,#ffb347 45%,#ff5a1a 62%,#ff5a1a00 72%);
+  mix-blend-mode:screen;animation:rk-fireball .7s ease-out forwards}
+.rk-boom .r{width:calc(60px * var(--k));height:calc(60px * var(--k));border:4px solid #ffe3a6;box-shadow:0 0 18px #ff9a38;animation:rk-ring .6s ease-out forwards}
+.rk-boom .r2{border-color:#ff9a38;animation-delay:.12s;opacity:0}
+.rk-boom .sp{width:7px;height:7px;background:#ffd36b;box-shadow:0 0 8px #ff9a38;animation:rk-spark .8s ease-out forwards}
+.rk-boom.big .sp{background:#fff3b0}
+
+.rk-dmg{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;text-align:center;
+  animation:rk-float 2.1s ease-out forwards}
+.rk-dmg b{font:400 clamp(36px,4.4vw,70px)/1 Impact,"Arial Black",sans-serif;color:#fff3e6;letter-spacing:1px;
+  text-shadow:0 3px 0 #b54d14,0 6px 0 #4a1d08,0 0 24px #ff9a38}
+.rk-dmg small{margin-top:4px;font:800 clamp(13px,1.2vw,18px)/1 system-ui,-apple-system,sans-serif;letter-spacing:1px;color:#ffd36b;text-shadow:0 2px 3px #000}
+.rk-dmg.gold b{color:#fff6c8;text-shadow:0 3px 0 #b78400,0 6px 0 #5a3c00,0 0 30px #ffd36b}
+.rk-dmg.dud b{color:#cfd3da;text-shadow:0 3px 0 #444,0 0 12px #000}
+.rk-dmg.dud small{color:#ff9b8f}
+
+/* banners: round intro at the top (where the health bar was), end result in the middle */
+.rk-cap{position:absolute;left:50%;top:14px;transform:translateX(-50%);padding:8px 16px;border-radius:12px;white-space:nowrap;
+  background:linear-gradient(#3a1a06e6,#1a0a02e6);border:2px solid #ee8a35;box-shadow:0 0 18px #ee8a3566;
+  font:400 clamp(16px,1.6vw,24px)/1 Impact,"Arial Black",sans-serif;letter-spacing:1px;color:#ffd9b8}
+.rk-cap span{font:700 .62em/1 system-ui,-apple-system,sans-serif;letter-spacing:.3px;color:#ffe8cf}
+.rk-banner{position:absolute;left:50%;top:30%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:8px;padding:18px 34px;
+  border-radius:20px;background:linear-gradient(#13213df2,#0a1222f2);border:3px solid #ee8a35;box-shadow:inset 0 0 0 2px #7c3d12,0 0 40px #ee8a3577,0 12px 30px #000c;
+  animation:rk-banner .55s cubic-bezier(.3,1.6,.5,1) both}
+.rk-banner b{font:400 clamp(34px,4.4vw,68px)/1 Impact,"Arial Black",sans-serif;letter-spacing:2px;color:#fff3e6;text-shadow:0 3px 0 #b54d14,0 6px 0 #4a1d08,0 0 24px #ee8a35aa}
+.rk-banner small{font:700 clamp(14px,1.3vw,20px)/1.3 system-ui,-apple-system,sans-serif;color:#d7e3ff}
+.rk-banner.out{transition:opacity .5s,transform .5s;opacity:0;transform:translate(-50%,-70%)}
+.rk-banner.end{top:42%}
+.rk-banner.win{border-color:#ffd36b}
+.rk-banner.lose b{color:#ffd6d0;text-shadow:0 3px 0 #7a1010,0 0 20px #ff3b3b88}
+
+/* Rob takes the hit; a perfect hit shakes the whole arena */
+.rk-hit{animation:rk-hit .5s ease-out}
+.rk-quake{animation:rk-quake .45s linear}
+
+@keyframes rk-puff{0%{opacity:.9;transform:scale(.3) rotate(0)}30%{opacity:.75}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(2.8) rotate(40deg)}}
+@keyframes rk-fire{0%{opacity:1;transform:scale(.6)}100%{opacity:0;transform:translate(var(--dx),var(--dy)) scale(1.6)}}
+@keyframes rk-fireball{0%{opacity:1;transform:translate(-50%,-50%) scale(.2)}60%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(1.25)}}
+@keyframes rk-ring{0%{opacity:1;transform:translate(-50%,-50%) scale(.3)}100%{opacity:0;transform:translate(-50%,-50%) scale(3.6)}}
+@keyframes rk-spark{0%{opacity:1;transform:translate(-50%,-50%)}100%{opacity:0;transform:translate(calc(-50% + var(--x)),calc(-50% + var(--y))) scale(.4)}}
+@keyframes rk-float{0%{opacity:0;transform:translate(-50%,-30%) scale(.6)}15%{opacity:1;transform:translate(-50%,-50%) scale(1.12)}25%{transform:translate(-50%,-50%) scale(1)}80%{opacity:1}100%{opacity:0;transform:translate(-50%,-120%)}}
+@keyframes rk-charge{to{opacity:.55}}
+@keyframes rk-tremble{0%{transform:translate(0,0)}25%{transform:translate(1px,-1px)}50%{transform:translate(-1px,1px)}75%{transform:translate(1px,1px)}}
+@keyframes rk-kick{0%{transform:translate(-14px,6px) rotate(4deg)}100%{transform:none}}
+@keyframes rk-kick-m{0%{transform:translate(14px,6px) rotate(-4deg)}100%{transform:none}}
+@keyframes rk-seg{0%{transform:scale(.4)}100%{transform:none}}
+@keyframes rk-flame{from{transform:scaleX(.8)}to{transform:scaleX(1.25)}}
+@keyframes rk-hit{0%,100%{transform:none;filter:none}15%{transform:translate(-10px,4px) rotate(-3deg);filter:brightness(2.2) saturate(.4)}35%{transform:translate(9px,-3px) rotate(2deg)}55%{transform:translate(-6px,2px)}75%{transform:translate(3px,-1px)}}
+@keyframes rk-quake{0%,100%{transform:none}20%{transform:translate(-7px,4px)}40%{transform:translate(6px,-5px)}60%{transform:translate(-4px,3px)}80%{transform:translate(3px,-2px)}}
+@keyframes rk-banner{from{opacity:0;transform:translate(-50%,-50%) scale(.6)}}
+@media (prefers-reduced-motion:reduce){.rk-unit.armed .rk-launcher,.rk-quake{animation:none}}

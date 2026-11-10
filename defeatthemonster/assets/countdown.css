@@ -1,0 +1,31 @@
+/* Countdown: cracked-stone 3 / 2 / 1 / GO artwork (art/count-*.webp) over a blurred game.
+   Each number races in from the left, drifts slowly through the middle for most of its second,
+   then shoots off to the right; GO flies in and stays. Markup: scripts/game-patches/11-count-images. */
+:is(.screen-battle,.screen-countdown) .count-overlay{background:#060c1f40;-webkit-backdrop-filter:blur(9px);backdrop-filter:blur(9px);overflow:hidden}
+:is(.screen-battle,.screen-countdown) .count-overlay:before{
+  content:"";position:absolute;left:50%;top:50%;width:min(66vh,600px);height:min(66vh,600px);
+  transform:translate(-50%,-50%);pointer-events:none;border-radius:50%;
+  background:radial-gradient(closest-side,#7a2dff75,#5a1eb040 55%,transparent 78%);
+  filter:blur(18px);animation:none;
+}
+:is(.screen-battle,.screen-countdown) .count-overlay .count-number.count-img{
+  position:relative;z-index:1;display:flex;align-items:center;justify-content:center;
+  width:auto;height:auto;padding:0;margin:0;background:none;border:0;box-shadow:none;text-shadow:none;clip-path:none;filter:none;
+  opacity:1;will-change:transform;animation:1s linear both count-fly!important;
+}
+:is(.screen-battle,.screen-countdown) .count-overlay .count-number.count-go{animation:.5s linear both count-fly-in!important}
+@keyframes count-fly{
+  0%{transform:translateX(-110vw);animation-timing-function:cubic-bezier(.15,.75,.3,1)}
+  16%{transform:translateX(-2.5vw);animation-timing-function:linear}
+  84%{transform:translateX(2.5vw);animation-timing-function:cubic-bezier(.7,0,.85,.25)}
+  100%{transform:translateX(110vw)}
+}
+@keyframes count-fly-in{
+  0%{transform:translateX(-110vw);animation-timing-function:cubic-bezier(.15,.75,.3,1)}
+  32%{transform:translateX(-1vw);animation-timing-function:linear}
+  100%{transform:translateX(0)}
+}
+.count-number.count-img img{display:block;height:min(58vh,500px);width:auto;max-width:92vw;object-fit:contain;user-select:none;pointer-events:none}
+.count-number.count-go img{height:min(44vh,380px)}
+@media (max-width:540px){.count-number.count-img img{height:min(42vh,300px)}.count-number.count-go img{height:min(32vh,230px)}}
+@media (prefers-reduced-motion:reduce){:is(.screen-battle,.screen-countdown) .count-overlay .count-number.count-img{animation:none!important}}

@@ -1,0 +1,194 @@
+/* Battle player cards: stone-and-lava frame (art/card-frame.webp, 9-slice), steel name plate,
+   ruined-city scene with the chosen hero in a stone ring (art/card-ring.webp), framed pixel
+   hearts, blue word panel and orange-glow answer buttons. Hearts markup: game-patches/16-card-hearts;
+   hero choice: game-patches/15-hero-*. Loaded after battle-cards.css / orange-cards.css. */
+:is(.screen-battle,.screen-countdown) .battle-players .player{
+  --card-pad:8px;
+  border:16px solid transparent;border-radius:0;
+  border-image:url(../art/card-frame.webp) 40 round;
+  background:linear-gradient(#17266a,#101a4a) padding-box;
+  padding:4px var(--card-pad) 8px;opacity:1;
+  box-shadow:0 0 16px #9a5cff55,0 8px 22px #02041180;
+  font-family:"Exo 2","Arial Black",sans-serif;
+}
+:is(.screen-battle,.screen-countdown) .battle-players .player::before,
+:is(.screen-battle,.screen-countdown) .battle-players .player::after{content:none;display:none}
+:is(.screen-battle,.screen-countdown) .battle-players .player.active{box-shadow:0 0 26px #ff9d3caa,0 0 8px #ffb357,0 8px 22px #02041180}
+:is(.screen-battle,.screen-countdown) .battle-players .player:not(.active){opacity:.93}
+.screen-battle .battle-players .player.result-correct{box-shadow:0 0 28px #35f5a7cc,0 0 8px #65ffc1}
+.screen-battle .battle-players .player.result-wrong{box-shadow:0 0 28px #ff4767cc,0 0 8px #ff6a87}
+
+/* header: rank coin · steel name plate · damage plate */
+:is(.screen-battle,.screen-countdown) .battle-players .card-top{gap:6px;min-height:40px;padding:2px 0 6px}
+:is(.screen-battle,.screen-countdown) .battle-players .card-top .rank-badge{
+  width:38px;height:38px;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 40% 35%,#f4f1ea,#c9c4ba 60%,#8d877d);color:#1d1b22;
+  font:900 14px/1 "Exo 2","Arial Black",sans-serif;
+  border:4px solid #5d6378;box-shadow:0 0 0 2px #ff9a3c,0 0 10px #ff8a2a99,inset 0 -2px 0 #0003;
+}
+:is(.screen-battle,.screen-countdown) .battle-players .card-top .hero-name{
+  background:linear-gradient(#3558c2,#1d318a);border:2px solid #9bb3e8;
+  clip-path:polygon(7% 0,93% 0,100% 22%,100% 78%,93% 100%,7% 100%,0 78%,0 22%);
+  box-shadow:inset 0 0 0 2px #1a2a6e;color:#fff;padding:7px 12px;
+  font:800 clamp(13px,1.1vw,18px)/1.1 "Exo 2","Arial Black",sans-serif;letter-spacing:.2px;text-shadow:0 2px 0 #0b1340;
+}
+:is(.screen-battle,.screen-countdown) .battle-players .player.active .card-top .hero-name{border-color:#ffb357;box-shadow:inset 0 0 0 2px #1a2a6e,0 0 10px #ff9d3c88}
+:is(.screen-battle,.screen-countdown) .battle-players .card-top .damage-pill{
+  background:#1a1633;border:2px solid #ff9a3c;border-radius:6px;padding:5px 8px;
+  box-shadow:0 0 8px #ff8a2a88,inset 0 0 0 2px #2c2250;color:#ff5d8f;
+  font:800 13px/1 "Exo 2","Arial Black",sans-serif;white-space:nowrap;
+}
+
+/* scene: ruined city behind the hero, portrait inside the stone ring, framed hearts below */
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar{
+  position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;
+  margin:0 calc(var(--card-pad) * -1) 8px;padding:10px 0 8px;
+  background:linear-gradient(#1a1f6a33,#0c103a88),url(../art/battle-city.png) 50% 40%/cover;
+  border-top:3px solid #3d5aa8;border-bottom:3px solid #3d5aa8;box-shadow:inset 0 0 22px #05082a;
+}
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar>span{
+  width:clamp(96px,8.6vw,136px);aspect-ratio:1/1;height:auto;min-height:0;border:0;border-radius:50%;
+  padding:14%;box-sizing:border-box;overflow:hidden;
+  background:url(../art/card-ring.webp) center/100% 100% no-repeat,url(../art/battle-city.png) 60% 35%/260% auto;
+  box-shadow:0 0 18px color-mix(in srgb,var(--hero) 55%,transparent);
+  display:flex;align-items:flex-end;justify-content:center;margin:0 auto;
+}
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar>span>*{width:100%;height:100%;object-fit:contain;object-position:center bottom;border-radius:0 0 50% 50%}
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar>span .sprite{background-size:300% 300%}
+.card-hearts{display:flex;gap:5px;justify-content:center;font-size:0}
+.card-heart{
+  width:24px;height:22px;border-radius:6px;display:block;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 11'%3E%3Cpath fill='%23ff7fe0' d='M1 1h2V0h2v1h2V0h2v1h2v2h1v3h-1v1h-1v1H9v1H8v1H7v1H5v-1H4V9H3V8H2V7H1V6H0V3h1Z'/%3E%3Cpath fill='%23ffd2f4' d='M2 2h2v1H2z'/%3E%3C/svg%3E") center/64% auto no-repeat,
+    linear-gradient(#4a2178,#2a1050);
+  border:2px solid #c888ff;box-shadow:0 0 8px #d06bff99,inset 0 0 0 1px #1b0a33;
+}
+.card-heart.lost{filter:grayscale(1) brightness(.45);box-shadow:none}
+
+/* word panel */
+:is(.screen-battle,.screen-countdown) .battle-players .word-screen{
+  border-radius:4px;border:3px solid #6f86c8;height:84px;min-height:84px;
+  background:radial-gradient(90% 120% at 50% 50%,#2a45a8,#162a78 70%,#111f5c);
+  box-shadow:inset 0 0 0 2px #0d1650,inset 0 0 0 4px #8d5cff66,0 0 10px #8d5cff55;
+}
+:is(.screen-battle,.screen-countdown) .battle-players .word-screen .waiting{color:#f2f4ff;font:800 clamp(16px,1.35vw,22px)/1 "Exo 2","Arial Black",sans-serif;text-shadow:0 2px 0 #0a1240;letter-spacing:.2px}
+:is(.screen-battle,.screen-countdown) .battle-players .word-screen strong{color:#fff;text-shadow:0 2px 0 #0a1240}
+
+/* answer buttons */
+:is(.screen-battle,.screen-countdown) .battle-players .answers{gap:8px}
+:is(.screen-battle,.screen-countdown) .battle-players .answers button,
+:is(.screen-battle,.screen-countdown) .battle-players .answers button:nth-child(2){
+  background:linear-gradient(135deg,#5b3fd6,#40279e 60%,#2e1a7c);border:2px solid #ff9a3c;border-radius:0;
+  clip-path:polygon(10px 0,calc(100% - 10px) 0,100% 10px,100% calc(100% - 10px),calc(100% - 10px) 100%,10px 100%,0 calc(100% - 10px),0 10px);
+  box-shadow:inset 0 0 0 2px #2a1470,inset 0 0 12px #ff8a2a55;color:#fff;
+  font:800 clamp(16px,1.4vw,22px)/1 "Exo 2","Arial Black",sans-serif;text-shadow:0 2px 0 #1a0c55;
+}
+:is(.screen-battle,.screen-countdown) .battle-players .player:not(.active) .answers button{opacity:1;color:#d9ccff}
+:is(.screen-battle,.screen-countdown) .battle-players .answers button:not(:disabled):hover{filter:brightness(1.15)}
+
+/* setup screen: tapping the portrait cycles through the free heroes */
+.screen-setup .setup-card .portrait.hero-pick{font:inherit;color:inherit;cursor:pointer;position:relative;padding:0;min-width:0;min-height:0;text-transform:none;letter-spacing:0}
+.screen-setup .setup-card .portrait.hero-pick::after{
+  content:"⟳";position:absolute;right:-4px;bottom:-4px;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  background:linear-gradient(#ffb357,#e27a2a);color:#2a1206;font:900 15px/1 "Exo 2",sans-serif;border:2px solid #fff3;box-shadow:0 2px 6px #0008;
+}
+.screen-setup .setup-card .portrait.hero-pick:hover{filter:brightness(1.12)}
+.screen-setup .setup-card .portrait.hero-pick:focus-visible{outline:3px solid #ffb357;outline-offset:3px}
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar>span{padding:11%}
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar>span .hero-art,
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar>span .sprite{width:100%!important;height:100%!important;max-width:none;transform:scale(1.45);transform-origin:50% 86%}
+
+/* bigger ring + hero that fills the inner circle; bigger hearts */
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar>span{
+  position:relative;width:clamp(128px,11vw,168px);padding:0;
+}
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar>span .hero-art,
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar>span .sprite{
+  position:absolute;left:0;right:0;bottom:13%;margin:auto;width:100%!important;height:74%!important;
+  object-fit:contain;object-position:center bottom;transform:none;border-radius:0;
+}
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar>span::after{
+  content:"";position:absolute;inset:0;border-radius:50%;pointer-events:none;
+  background:url(../art/card-ring.webp) center/100% 100% no-repeat;
+}
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar{gap:8px;padding:12px 0 10px}
+.card-hearts{gap:7px}
+.card-heart{width:34px;height:31px;border-radius:8px;border-width:2.5px;background-size:62% auto,auto}
+
+/* keep the taller portrait from pushing the answers off screen */
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar{gap:0;padding:6px 0 6px;margin-bottom:6px}
+.card-hearts{position:relative;z-index:2;margin-top:-16px}
+:is(.screen-battle,.screen-countdown) .battle-players .card-top{min-height:36px;padding:0 0 4px}
+:is(.screen-battle,.screen-countdown) .battle-players .card-top .rank-badge{width:34px;height:34px;border-width:3px}
+:is(.screen-battle,.screen-countdown) .battle-players .word-screen{height:70px;min-height:70px}
+:is(.screen-battle,.screen-countdown) .battle-players .turn-timer{height:30px;padding-top:6px;gap:4px}
+:is(.screen-battle,.screen-countdown) .battle-players .answers{gap:6px}
+:is(.screen-battle,.screen-countdown) .battle-players .answers button{min-height:42px;padding:8px 6px}
+:is(.screen-battle,.screen-countdown) .battle-players .answers{grid-auto-rows:44px;height:auto;min-height:0}
+:is(.screen-battle,.screen-countdown) .battle-players .player{border-width:14px;padding-bottom:6px}
+
+/* the card's frame matches the lineup cards: rounded orange border with a dark inner ring and orange
+   corner brackets (top-left, bottom-right) instead of the stone-and-lava frame; the inside stays the same */
+:is(.screen-battle,.screen-countdown) .battle-players .player{
+  border:3px solid #ee8a35;border-image:none;border-radius:20px;padding:10px 10px 8px;
+  background:linear-gradient(#13213ddb,#0c1830e8),url(../art/battle-city.png) 50%/cover;
+  box-shadow:inset 0 0 0 2px #7c3d12,inset 0 0 28px #ee8a352b,0 8px 25px #040b2255;
+}
+:is(.screen-battle,.screen-countdown) .battle-players .player::before,
+:is(.screen-battle,.screen-countdown) .battle-players .player::after{
+  content:"";display:block;pointer-events:none;position:absolute;inset:auto;border:0;z-index:3;width:40px;height:40px;
+  clip-path:polygon(0 0,100% 0,100% 22%,30% 22%,22% 30%,22% 100%,0 100%);filter:drop-shadow(2px 3px 2px #0008);
+  background:linear-gradient(135deg,#ffd9a6,#e27a2a 50%,#6e310c);
+}
+:is(.screen-battle,.screen-countdown) .battle-players .player::before{top:-3px;left:-3px}
+:is(.screen-battle,.screen-countdown) .battle-players .player::after{bottom:-3px;right:-3px;transform:rotate(180deg)}
+/* whose turn it is: brighter orange glow; right / wrong answers keep their green / red */
+:is(.screen-battle,.screen-countdown) .battle-players .player.active{border-color:#ffb357;box-shadow:inset 0 0 0 2px #9a4d14,inset 0 0 30px #ffb35733,0 0 26px #ff9d3c70}
+:is(.screen-battle,.screen-countdown) .battle-players .player.active::before,
+:is(.screen-battle,.screen-countdown) .battle-players .player.active::after{background:linear-gradient(135deg,#fff1dc,#ff9d3c 50%,#8a3d0c)}
+.screen-battle .battle-players .player.result-correct{border-color:#65ffc1;box-shadow:0 0 24px #35f5a775,inset 0 0 25px #35f5a72a}
+.screen-battle .battle-players .player.result-wrong{border-color:#ff6a87;box-shadow:0 0 24px #ff476775,inset 0 0 25px #ff47672a}
+/* the city scene and the word panel reach the new, thinner border */
+:is(.screen-battle,.screen-countdown) .battle-players .player{--card-pad:10px}
+
+/* ---------- simpler cards: one flat dark card, one thin orange border, plain shapes, no heavy glows ---------- */
+:is(.screen-battle,.screen-countdown) .battle-players .player{
+  border:2px solid #e8893a;border-radius:18px;padding:10px;background:#111a33;
+  box-shadow:0 6px 18px #02041160;
+}
+:is(.screen-battle,.screen-countdown) .battle-players .player::before,
+:is(.screen-battle,.screen-countdown) .battle-players .player::after{content:none;display:none}
+:is(.screen-battle,.screen-countdown) .battle-players .player.active{border-color:#ffb357;box-shadow:0 0 0 3px #ffb35740,0 6px 18px #02041160}
+.screen-battle .battle-players .player.result-correct{border-color:#65ffc1;box-shadow:0 0 0 3px #65ffc140}
+.screen-battle .battle-players .player.result-wrong{border-color:#ff6a87;box-shadow:0 0 0 3px #ff6a8740}
+/* header: plain number, name and damage */
+:is(.screen-battle,.screen-countdown) .battle-players .card-top .rank-badge{
+  width:30px;height:30px;border:0;box-shadow:none;background:#26304f;color:#cfd8f5;font-size:13px}
+:is(.screen-battle,.screen-countdown) .battle-players .card-top .hero-name,
+:is(.screen-battle,.screen-countdown) .battle-players .player.active .card-top .hero-name{
+  clip-path:none;border:0;border-radius:10px;background:#1f2a4a;box-shadow:none;text-shadow:none;padding:7px 10px}
+:is(.screen-battle,.screen-countdown) .battle-players .player.active .card-top .hero-name{background:#3a2a1a;color:#ffd7a6}
+:is(.screen-battle,.screen-countdown) .battle-players .card-top .damage-pill{border:0;border-radius:10px;background:#1f2a4a;box-shadow:none;color:#ff8fb0}
+/* hero: simple round picture in the hero's colour, city picture behind kept calm */
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar{
+  margin:0 0 8px;border:0;border-radius:12px;box-shadow:none;
+  background:linear-gradient(#111a33aa,#111a33cc),url(../art/battle-city.png) 50% 40%/cover}
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar>span{
+  background:#1b2547;border:3px solid var(--hero,#ffb357);box-shadow:none;width:clamp(110px,9vw,140px)}
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar>span::after{content:none}
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar>span .hero-art,
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar>span .sprite{bottom:0;height:88%!important}
+.card-hearts{margin-top:8px}
+.card-heart{width:28px;height:26px;border:0;border-radius:8px;box-shadow:none;background-color:transparent;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 11'%3E%3Cpath fill='%23ff7fe0' d='M1 1h2V0h2v1h2V0h2v1h2v2h1v3h-1v1h-1v1H9v1H8v1H7v1H5v-1H4V9H3V8H2V7H1V6H0V3h1Z'/%3E%3C/svg%3E");
+  background-size:80% auto;background-repeat:no-repeat;background-position:center}
+.card-heart.lost{filter:grayscale(1) brightness(.4)}
+/* word panel and answers: flat, rounded */
+:is(.screen-battle,.screen-countdown) .battle-players .word-screen{
+  border:0;border-radius:12px;background:#1f2a4a;box-shadow:none}
+:is(.screen-battle,.screen-countdown) .battle-players .word-screen .waiting,
+:is(.screen-battle,.screen-countdown) .battle-players .word-screen strong{text-shadow:none}
+:is(.screen-battle,.screen-countdown) .battle-players .answers button,
+:is(.screen-battle,.screen-countdown) .battle-players .answers button:nth-child(2){
+  clip-path:none;border:0;border-radius:10px;background:#3b3192;box-shadow:none;text-shadow:none}
+:is(.screen-battle,.screen-countdown) .battle-players .player.active .answers button{background:#5a43d6}

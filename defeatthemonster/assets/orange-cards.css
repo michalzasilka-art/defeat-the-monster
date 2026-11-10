@@ -1,0 +1,23 @@
+/* Player cards: orange frame (outer border, inner ring and the two corner brackets)
+   on the setup screen and in battle. The inside of the cards is unchanged. */
+.screen-setup .setup-card,
+:is(.screen-battle,.screen-countdown) .battle-players .player{
+  border-color:#ee8a35;
+  box-shadow:inset 0 0 0 2px #7c3d12,inset 0 0 28px #ee8a352b,0 8px 25px #040b2255}
+.screen-setup .setup-card::before,.screen-setup .setup-card::after,
+:is(.screen-battle,.screen-countdown) .battle-players .player::before,
+:is(.screen-battle,.screen-countdown) .battle-players .player::after{
+  background:linear-gradient(135deg,#ffd9a6,#e27a2a 50%,#6e310c)}
+
+/* the player whose turn it is: brighter, glowing orange */
+:is(.screen-battle,.screen-countdown) .battle-players .player.active{
+  border-color:#ffb357;
+  box-shadow:inset 0 0 0 2px #9a4d14,inset 0 0 30px #ffb35733,0 0 26px #ff9d3c70}
+:is(.screen-battle,.screen-countdown) .battle-players .player.active::before,
+:is(.screen-battle,.screen-countdown) .battle-players .player.active::after{
+  background:linear-gradient(135deg,#fff1dc,#ff9d3c 50%,#8a3d0c)}
+:is(.screen-battle,.screen-countdown) .battle-players .player.active .card-top .hero-name{border-color:#e98b3c}
+
+/* right/wrong answer flashes keep their green/red */
+.screen-battle .battle-players .player.result-correct{border-color:#65ffc1;box-shadow:0 0 24px #35f5a775,inset 0 0 25px #35f5a72a}
+.screen-battle .battle-players .player.result-wrong{border-color:#ff6a87;box-shadow:0 0 24px #ff476775,inset 0 0 25px #ff47672a}

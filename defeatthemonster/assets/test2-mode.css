@@ -1,0 +1,62 @@
+/* Game mode card on the menu (assets/test2-mode.js): two tiles, Classic (navy, shield) and Pro-Mode (crimson, flame),
+   in the frame style of the "How to play" card */
+.mode-tab{position:relative;flex:0 0 auto;width:clamp(290px,25vw,380px)}
+.mode-tab .eyebrow{position:absolute;z-index:2;left:18px;top:-14px;margin:0;padding:5px 10px;transform:none;clip-path:none;
+  background:linear-gradient(#1d3151,#101c30);border:2px solid #385783;
+  font:800 clamp(13px,1.05vw,16px)/1 Impact,"Arial Black",sans-serif;letter-spacing:1px;color:#e4ddff;text-shadow:1px 2px 0 #080f25;pointer-events:none}
+.mode-card{position:relative;display:grid;grid-template-columns:1fr 1fr;gap:10px;min-height:96px;padding:20px 10px 10px;
+  background:linear-gradient(#13213ddb,#0c1830e8),url(../art/battle-city.png) 50% 50%/cover;
+  border:3px solid #ee8a35;border-radius:20px;box-shadow:inset 0 0 0 2px #7c3d12,inset 0 0 28px #ee8a352b,0 8px 25px #040b2255}
+.mode-card button{--mc:#7fb4ff;--mc-dim:#36537d;position:relative;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:5px;
+  min-width:0;padding:8px 10px 9px;text-align:left;cursor:pointer;color:#e9e4ff;
+  background:linear-gradient(160deg,#16294bcc,#0a162bee);border:2px solid var(--mc-dim);border-radius:13px;
+  transition:border-color .15s ease,box-shadow .15s ease,transform .15s ease,filter .15s ease}
+.mode-card [data-mode=test2]{--mc:#ff4a3d;--mc-dim:#6e1f22;background:linear-gradient(160deg,#3a0d16ee,#14050ae8)}
+.mc-top{display:flex;align-items:center;gap:7px}
+.mc-ic{display:grid;place-items:center;flex:none;width:24px;height:24px;color:var(--mc);filter:drop-shadow(0 0 6px var(--mc))}
+.mc-ic svg{width:100%;height:100%}
+.mode-card b{font:800 clamp(16px,1.35vw,21px)/1 Impact,"Arial Black",sans-serif;letter-spacing:1px;white-space:nowrap;text-shadow:1px 2px 0 #080f25}
+.mode-card [data-mode=test2] b{color:#ffd6d0;text-shadow:1px 2px 0 #1a0408,0 0 10px #ff3b3b99}
+.mode-card small{font:700 11px/1.25 system-ui,-apple-system,"Segoe UI",sans-serif;color:#b7cdf4}
+.mode-card [data-mode=test2] small{color:#ffb3a8;text-transform:uppercase;letter-spacing:.4px}
+/* selected: bright border, glow and a check badge */
+.mode-card button.on{border-color:var(--mc);box-shadow:inset 0 0 18px color-mix(in srgb,var(--mc) 30%,transparent),0 0 16px color-mix(in srgb,var(--mc) 55%,transparent)}
+.mode-card button.on::after{content:"\2713";position:absolute;top:-8px;right:-8px;display:grid;place-items:center;width:20px;height:20px;
+  border-radius:50%;background:var(--mc);color:#0a1020;font:900 12px/1 system-ui,sans-serif;box-shadow:0 0 8px var(--mc)}
+.mode-card button:not(.on):not(.locked):hover{border-color:var(--mc);transform:translateY(-2px)}
+/* locked Pro-Mode: dimmed, LOCKED tag in the corner, shakes when tapped */
+.mc-lock{display:none;position:absolute;top:-9px;right:8px;align-items:center;gap:3px;padding:2px 6px;border-radius:6px;
+  background:#1b0a0e;border:1.5px solid #6e1f22;font:800 9px/1 system-ui,sans-serif;letter-spacing:.8px;color:#ff9b8f}
+.mc-lock svg{width:9px;height:9px}
+.mode-card button.locked{cursor:not-allowed;filter:saturate(.35) brightness(.8)}
+.mode-card button.locked .mc-lock{display:flex}
+.mode-card button.nope{animation:mode-nope .35s ease}
+@keyframes mode-nope{25%{transform:translateX(-5px)}50%{transform:translateX(5px)}75%{transform:translateX(-3px)}}
+@media (max-width:760px){.mode-tab{width:100%;max-width:440px;margin:6px auto 0}}
+/* victory screen: unlock banner */
+.test2-unlocked{display:flex;flex-direction:column;align-items:center;gap:4px;margin:14px auto 0;padding:10px 20px;width:fit-content;
+  background:linear-gradient(#3a0d16f0,#14050af0);border:3px solid #ff4a3d;border-radius:16px;box-shadow:0 0 26px #ff3b3b80;
+  animation:mode-pop .5s cubic-bezier(.2,1.4,.4,1) both}
+.test2-unlocked b{font:800 clamp(18px,1.8vw,26px)/1 Impact,"Arial Black",sans-serif;letter-spacing:1px;color:#ffd6d0;text-shadow:1px 2px 0 #1a0408,0 0 10px #ff3b3b99}
+.test2-unlocked small{font:13px/1.2 monospace;color:#ffb3a8}
+@keyframes mode-pop{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:none}}
+/* Pro-Mode caps the answer time at 5 s (game bundle): the slider's max label says so */
+html[data-dtm-mode=test2] .screen-setup .time-slider .ts-edge:last-child{font-size:0}
+html[data-dtm-mode=test2] .screen-setup .time-slider .ts-edge:last-child::after{content:"PRO: 5 s max";font-size:12px;color:#ff9b8f}
+
+/* story part tag on each tile: Classic is part 1 of the story, Pro-Mode part 2 (the two dots fill up) */
+.mc-part{position:absolute;top:-9px;left:8px;display:flex;align-items:center;gap:3px;padding:2px 6px;border-radius:6px;
+  background:#0c1830;border:1.5px solid var(--mc-dim);font:800 9px/1 system-ui,sans-serif;letter-spacing:.8px;color:#b7cdf4;white-space:nowrap}
+.mode-card .mc-part b{font:inherit;font-weight:900;letter-spacing:inherit;color:var(--mc);text-shadow:none;white-space:nowrap}
+.mc-part i{width:5px;height:5px;border-radius:50%;background:#2a3c62;margin-left:1px}
+.mc-part i:first-of-type{margin-left:4px}
+.mc-part i.on{background:var(--mc);box-shadow:0 0 5px var(--mc)}
+.mode-card [data-mode=test2] .mc-part{background:#1b0a0e;color:#ffb3a8}
+.mode-card button.on .mc-part{border-color:var(--mc)}
+/* difficulty meter under the text: Classic NORMAL (1 flame), Pro-Mode HARD (3 flames) */
+.mc-diff{display:flex;align-items:center;gap:1px;margin-top:2px;font:900 9px/1 system-ui,sans-serif;letter-spacing:1px;color:var(--mc)}
+.mc-diff i{display:grid;width:12px;height:12px;color:var(--mc);filter:drop-shadow(0 0 3px var(--mc))}
+.mc-diff i.off{color:#3a4a6a;filter:none;opacity:.7}
+.mc-diff i:last-of-type{margin-right:4px}
+.mc-diff svg{width:100%;height:100%}
+.mode-card button.locked .mc-part i{display:none} /* room for the LOCKED tag */

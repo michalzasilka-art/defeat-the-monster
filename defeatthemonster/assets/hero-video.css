@@ -1,0 +1,35 @@
+/* Animated hero scenes (assets/hero-video.js): the video covers the whole scene rectangle of the
+   battle card (background + round portrait); the portrait keeps its space but is hidden, hearts on top. */
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar.has-hero-video{overflow:hidden;background:#0b182d}
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar.has-hero-video>span{visibility:hidden}
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar>video.hero-video{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%; /* video is pre-cropped so the hero is at its horizontal centre */
+  border-radius:inherit;pointer-events:none;z-index:0;
+}
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar.has-hero-video>:not(video){position:relative;z-index:1}
+/* hearts sit on a dark tab so they stay readable over the moving video */
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar.has-hero-video>.card-hearts{
+  align-self:center;width:fit-content;padding:5px 12px;border-radius:12px;
+  background:#0b1226cc;border:1px solid #ffffff22;box-shadow:0 4px 12px #0008;
+  -webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);
+}
+/* lobby: the video replaces the hero picture inside the round portrait */
+.portrait.hero-pick.has-hero-video>img.hero-art{display:none!important}
+.portrait.hero-pick>video.hero-video{
+  display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%;
+  pointer-events:none; /* the round button clips it; zoom comes from hero-video.js */
+}
+/* turn timer as an outline around the hearts tab (hero-video.js draws it); the flat bar under
+   the word panel is hidden for these cards, the "x.xs left" text stays */
+:is(.screen-battle,.screen-countdown) .battle-players .battle-avatar.has-hero-video>.card-hearts{border-color:transparent}
+.card-hearts>svg.hearts-timer{position:absolute;inset:-3px;width:calc(100% + 6px);height:calc(100% + 6px);pointer-events:none;overflow:visible}
+.hearts-timer path{fill:none;stroke-width:3;stroke-linecap:round}
+.hearts-timer .ht-track{stroke:#ffffff26}
+.hearts-timer .ht-bar{stroke:url(#ht-g);filter:drop-shadow(0 0 3px #ff9d3caa)}
+.card-hearts.ht-low .hearts-timer .ht-bar{stroke:#ff5a6e;filter:drop-shadow(0 0 4px #ff4767cc)}
+:is(.screen-battle,.screen-countdown) .battle-players .player:has(.battle-avatar.has-hero-video) .turn-timer .timer{display:none}
+
+/* XP screen, round leaderboard + podium: the round pictures play the hero video too (hero-video.js) */
+:is(.xp-portrait,.board-portrait,.final-portrait).has-hero-video img.hero-art{display:none!important}
+:is(.xp-portrait,.board-portrait,.final-portrait).has-hero-video{align-items:center}
+:is(.xp-portrait,.board-portrait,.final-portrait)>video.hero-video{display:block;width:100%;height:100%;object-fit:cover;object-position:50% 50%;pointer-events:none;flex:none}
